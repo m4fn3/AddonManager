@@ -1,6 +1,6 @@
-import {View, FormSection, FormRow, FormSwitch, Image, Text, ScrollView, FormInput} from "enmity/components"
-import {set, SettingsStore} from "enmity/api/settings"
-import {Constants, Dialog, Navigation, React, StyleSheet, Toasts} from "enmity/metro/common"
+import {View, FormSection, FormRow, Image, Text, ScrollView} from "enmity/components"
+import {SettingsStore} from "enmity/api/settings"
+import {Constants, Navigation, React, StyleSheet, Toasts} from "enmity/metro/common"
 import {getIDByName} from "enmity/api/assets"
 import {Linking} from "enmity/metro/common"
 
@@ -84,7 +84,7 @@ export default ({settings}: SettingsProps) => {
                     style={styles.image}
                 />
                 <View style={styles.title}>
-                    <Text style={styles.name}>AddonStore</Text>
+                    <Text style={styles.name}>AddonManager</Text>
                     <Text style={styles.author}>by mafu</Text>
                 </View>
             </View>
@@ -94,7 +94,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<PluginIcon width={24} height={24}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Plugins, name: "Plugins - AddonStore"})
+                        Navigation.push(Page, {component: Plugins, name: "Plugins - AddonManager"})
                     }}
                 />
                 <FormRow
@@ -102,7 +102,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<ThemeIcon width={24} height={24}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Themes, name: "Themes - AddonStore"})
+                        Navigation.push(Page, {component: Themes, name: "Themes - AddonManager"})
                     }}
                 />
                 <FormRow
@@ -125,7 +125,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<FormRow.Icon source={ImportIcon}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Import, name: "Import - AddonStore"})
+                        Navigation.push(Page, {component: Import, name: "Import - AddonManager"})
                     }}
                 />
                 <FormRow
@@ -133,7 +133,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<FormRow.Icon source={UpdateIcon}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Update, name: "Update - AddonStore"})
+                        Navigation.push(Page, {component: Update, name: "Update - AddonManager"})
                     }}
                 />
             </FormSection>
@@ -153,7 +153,7 @@ export default ({settings}: SettingsProps) => {
                     trailing={FormRow.Arrow}
                     leading={<FormRow.Icon source={GitHubIcon}/>}
                     onPress={() => {
-                        Linking.openURL("https://github.com/m4fn3/AddonStore")
+                        Linking.openURL("https://github.com/m4fn3/AddonManager")
                     }}
                 />
             </FormSection>

@@ -1,21 +1,18 @@
-import {FormRow, ScrollView, FormInput, FormSection, View} from 'enmity/components'
-import {Dialog, React, StyleSheet, Constants, Toasts, Navigation} from 'enmity/metro/common'
+import {FormRow, ScrollView, FormSection, FormSwitch} from 'enmity/components'
+import {React, StyleSheet, Constants} from 'enmity/metro/common'
 import {getIDByName} from "enmity/api/assets";
 
-// @ts-ignore
-import plugins from '../../plugins.json'
-// @ts-ignore
-import themes from '../../themes.json'
-import {installPlugin, installTheme, getTheme, getThemes} from "../utils/addon"
-import {getPlugin, getPlugins} from "enmity/managers/plugins"
+import {installPlugin, installTheme, getTheme} from "../utils/addon"
+import {getPlugin} from "enmity/managers/plugins"
+import {getPluginDatabase, getThemeDatabase} from "../utils/fetch";
+import {get, set} from "enmity/api/settings";
 
-const FailIcon = getIDByName('Small')
+// @ts-ignore
+import {name} from '../../manifest.json'
+import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update";
+
 const DownloadIcon = getIDByName('ic_download_24px')
-const CheckIcon = getIDByName('ic_check_24px')
 
-function isUpdate(from, to) {
-    return to.localeCompare(from, undefined, {numeric: true}) === 1
-}
 
 function Update() {
 
@@ -27,19 +24,34 @@ function Update() {
     })
 
 
-    const installedPlugins = getPlugins().map((plugin) => plugin.name)
-    const installedThemes = getThemes().map((theme) => theme.name)
+    const plugins = getPluginDatabase()
+    const themes = getThemeDatabase()
 
-    // バージョンを比較してアップデート可能なプラグインのリストを取得すr - dbに存在することを確認,versionがない場合もあるのであることを先に確認
-    let updatablePlugins = installedPlugins.filter((name) => Object.keys(plugins).includes(name) && Object.keys(plugins[name]).includes("version") && getPlugin(name).version && isUpdate(getPlugin(name).version, plugins[name].version))
-    let updatableThemes = installedThemes.filter((name) => Object.keys(themes).includes(name) && Object.keys(themes[name]).includes("version") && getTheme(name).version && isUpdate(getTheme(name).version, themes[name].version))
+    const updatablePlugins = getUpdatablePlugins(plugins)
+    const updatableThemes = getUpdatableThemes(themes)
 
     // [name, name, name...]
     const [pluginList, setPluginList] = React.useState(updatablePlugins.length ? updatablePlugins : ["@"])
     const [themeList, setThemeList] = React.useState(updatableThemes.length ? updatableThemes : ["@"])
+    const [switchVal, setSwitchVal] = React.useState(Boolean(get(name, "check_updates"))) // 格納されている値は0,1になっているので真偽値に変換
 
     return (
         <ScrollView style={styles.container}>
+            <FormSection title="UPDATE">
+                <FormRow
+                    label="Check updates on startup"
+                    trailing={
+                        <FormSwitch
+                            value={switchVal}
+                            onValueChange={(value) => {
+                                console.log(value)
+                                setSwitchVal(value)
+                                set(name, "check_updates", value)
+                            }}
+                        />
+                    }
+                />
+            </FormSection>
             <FormSection title="PLUGINS">
                 {
                     pluginList.map((name) =>

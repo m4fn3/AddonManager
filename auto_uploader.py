@@ -24,7 +24,7 @@ user = "root"
 password = "alpine"
 # plugin_dir = "/var/mobile/Containers/Data/Application/67B6DA71-D282-4C83-A7C8-17C0BF6CB9E1/Documents/Plugins/"
 plugin_dir = "/var/mobile/Containers/Data/Application/8518D615-0D41-4766-BE03-1D8862DF036D/Documents/Plugins/"  # iphone7
-plugin_name = "AddonStore"
+plugin_name = "AddonManager"
 
 
 class HTTPHandler(SimpleHTTPRequestHandler):

@@ -5,7 +5,7 @@ export const Settings = NavigationStack.createStackNavigator();
 
 const { ThemeColorMap } = ColorMap;
 
-export default ({ name = 'AddonStore', component = View } = {}) => {
+export default ({ name = 'AddonManager', component = View } = {}) => {
   const styles = StyleSheet.createThemedStyleSheet({
     container: {
       backgroundColor: ThemeColorMap.BACKGROUND_MOBILE_SECONDARY,

@@ -1,40 +1,26 @@
 import {Plugin, registerPlugin} from 'enmity/managers/plugins'
 import {React} from 'enmity/metro/common'
 import {create} from 'enmity/patcher'
+
+import addon from "./components/Commands"
+
 // @ts-ignore
 import manifest, {name} from '../manifest.json'
-
 import Settings from './components/Settings'
-import {checkUpdate} from "../../K2geLocker/src/utils/update";
-import {get, set} from "enmity/api/settings";
+import {checkPluginDatabaseVer, checkThemeDatabaseVer} from "./utils/fetch"
+import {checkUpdate} from "./utils/update"
 
-const Patcher = create('AddonStore')
+const Patcher = create('AddonManager')
 
-function initVariable(valName, defVal, force = false) {
-    if (force) {
-        set(name, valName, defVal)
-    } else if (get(name, valName) === undefined) {
-        set(name, valName, defVal)
-    }
-}
-
-const AddonStore: Plugin = {
+const AddonManager: Plugin = {
     ...manifest,
 
     onStart() {
-        const metas = [["check_updates", true]]
-        metas.forEach((meta) => {
-            // @ts-ignore
-            initVariable(...meta)
-        })
+        this.commands = [addon]
 
-        if (get(name, "check_updates")) {
-            if (get(name, "_updating")) { // アップデート中はチェックを飛ばす
-                set(name, "_updating", false) // Updateを押した後にCancelした場合はinstallPluginのCallbackが呼ばれないためここでオフにする
-            } else {
-                checkUpdate()
-            }
-        }
+        checkPluginDatabaseVer()
+        checkThemeDatabaseVer()
+        checkUpdate()
     },
     onStop() {
         Patcher.unpatchAll()
@@ -44,4 +30,4 @@ const AddonStore: Plugin = {
     }
 }
 
-registerPlugin(AddonStore)
+registerPlugin(AddonManager)
