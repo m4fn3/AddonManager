@@ -1,0 +1,12 @@
+{
+   "name": "AddonStore",
+   "version": "1.0.0",
+   "description": "Manage plugins & themes easily!",
+   "authors": [
+      {
+         "name": "mafu",
+         "id": "519760564755365888"
+      }
+   ],
+   "color": "#00ffff"
+}
