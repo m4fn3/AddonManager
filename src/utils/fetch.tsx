@@ -3,8 +3,8 @@ import {get, set} from 'enmity/api/settings'
 // @ts-ignore
 import {name} from '../../manifest.json'
 
-const rawURL = "http://192.168.11.9:8000/"
-// const rawURL = "https://raw.githubusercontent.com/m4fn3/AddonManagerDatabase/master/"
+// const rawURL = "http://192.168.11.9:8000/" // Test
+const rawURL = "https://raw.githubusercontent.com/m4fn3/AddonManagerDatabase/master/"
 const pluginDatabaseURL = rawURL + "plugins.json"
 const themeDatabaseURL = rawURL + "themes.json"
 const pluginDatabaseVerURL = rawURL + "plugins_update.txt"
