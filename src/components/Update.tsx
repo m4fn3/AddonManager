@@ -44,7 +44,6 @@ function Update() {
                         <FormSwitch
                             value={switchVal}
                             onValueChange={(value) => {
-                                console.log(value)
                                 setSwitchVal(value)
                                 set(name, "check_updates", value)
                             }}
