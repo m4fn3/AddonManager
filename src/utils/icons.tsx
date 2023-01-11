@@ -1,4 +1,4 @@
-// from https://github.com/enmity-mod/enmity/tree/main/src/core/screens/partials
+// from https://github.com/enmity-mod/enmity/tree/main/src/cwindore/screens/partials
 
 import { SVG, StyleSheet, ColorMap, React } from 'enmity/metro/common';
 const { ThemeColorMap } = ColorMap;
