@@ -1,14 +1,17 @@
-import {FormRow, ScrollView, FormSection, TextInput} from 'enmity/components'
+import {FormRow, ScrollView, FormSection, TextInput, FormDivider} from 'enmity/components'
 import {React, StyleSheet, Constants, Toasts} from 'enmity/metro/common'
 import {getIDByName} from "enmity/api/assets";
 
 import {getThemes, installPlugin, installTheme} from "../utils/addon"
 import {getPlugins} from "enmity/managers/plugins"
 import {getPluginDatabase, getThemeDatabase} from "../utils/fetch";
+import {fetchNote} from "../utils/note";
 
 const FailIcon = getIDByName('Small')
 const DownloadIcon = getIDByName('ic_download_24px')
 const CheckIcon = getIDByName('ic_check_24px')
+const ImportIcon = getIDByName('ic_leave_stage')
+const ClearIcon = getIDByName('ic_input_clear_24px')
 
 
 function Import() {
@@ -47,6 +50,20 @@ function Import() {
         setThemeList(Object.keys(importedThemes).length ? importedThemes : {"": {}})
     }
 
+    function checkFormat(text, error = undefined) {
+        let content = text.split("|")
+        if (content.length != 2) {
+            let text = error ? error : "Invalid text format. Please make sure that you entered correct text."
+            Toasts.open({
+                content: text,
+                source: FailIcon
+            })
+            return false
+        } else {
+            return content
+        }
+    }
+
     // React.useEffect(() => { // 自動読込
     //     let copied = Clipboard.getString()
     //     let content =copied.split("|")
@@ -60,22 +77,38 @@ function Import() {
     return (
         <ScrollView style={styles.container}>
             <FormSection title="IMPORT">
+                <FormRow
+                    style={styles.importBackup}
+                    label="Import from backup"
+                    subLabel="Import installed addons from backup that linked to your discord account."
+                    leading={<FormRow.Icon source={ImportIcon}/>}
+                    trailing={FormRow.Arrow}
+                    onPress={() => {
+                        fetchNote("1048982327809818706").then((text) => {
+                            let res = checkFormat(text, "No backup was found.")
+                            if (res) {
+                                processExportedText(res)
+                                Toasts.open({
+                                    content: "Successfully imported addons from backup!",
+                                    source: CheckIcon
+                                })
+                            }
+                        })
+                    }}
+                />
+            </FormSection>
+            <FormSection>
                 <TextInput
                     style={styles.importText}
                     ref={input => {
                         importText = input
                     }}
-                    placeholder="Paste exported text here"
+                    placeholder="Paste exported text"
                     onSubmitEditing={(event) => {
-                        let content = event.nativeEvent.text.split("|")
-                        if (content.length != 2) {
-                            Toasts.open({
-                                content: "Invalid text format. Please make sure that you entered correct text.",
-                                source: FailIcon
-                            })
-                            return
+                        let res = checkFormat(event.nativeEvent.text)
+                        if (res) {
+                            processExportedText(res)
                         }
-                        processExportedText(content)
                     }}
                 />
                 <FormRow

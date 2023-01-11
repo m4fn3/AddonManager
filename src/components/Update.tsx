@@ -12,6 +12,7 @@ import {name} from '../../manifest.json'
 import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update";
 
 const DownloadIcon = getIDByName('ic_download_24px')
+const UpdateIcon = getIDByName('ic_copy_message_link')
 
 
 function Update() {
@@ -22,7 +23,6 @@ function Update() {
             backgroundColor: Constants.ThemeColorMap.BACKGROUND_PRIMARY,
         }
     })
-
 
     const plugins = getPluginDatabase()
     const themes = getThemeDatabase()
@@ -40,6 +40,7 @@ function Update() {
             <FormSection title="UPDATE">
                 <FormRow
                     label="Check updates on startup"
+                    leading={<FormRow.Icon source={UpdateIcon}/>}
                     trailing={
                         <FormSwitch
                             value={switchVal}

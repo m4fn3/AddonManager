@@ -11,10 +11,9 @@ import Page from "./Page"
 import {Plugins} from "./Plugins"
 import {Themes} from "./Themes"
 import {Update} from "./Update"
-import {getPlugins} from "enmity/managers/plugins"
 import {getByProps} from "enmity/metro"
 import {Import} from "./Import"
-import {getThemes} from "../utils/addon"
+import {Export} from "./Export";
 
 interface SettingsProps {
     settings: SettingsStore
@@ -24,7 +23,6 @@ interface SettingsProps {
 const Clipboard = getByProps('setString')
 
 // variables
-const copyIcon = getIDByName('ic_message_copy')
 const GitHubIcon = getIDByName('img_account_sync_github_white')
 const TwitterIcon = getIDByName('img_account_sync_twitter_white')
 const UpdateIcon = getIDByName('toast_image_saved')
@@ -110,14 +108,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<FormRow.Icon source={ExportIcon}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        let plugins = getPlugins().map((plugin) => plugin.name).join(";")
-                        // @ts-ignore
-                        let themes = getThemes().map((theme) => theme.name).join(";")
-                        Clipboard.setString(`${plugins}|${themes}`)
-                        Toasts.open({
-                            content: "Copied addon list to clipboard!\nNow please save this to somewhere!",
-                            source: copyIcon
-                        })
+                        Navigation.push(Page, {component: Export, name: "Export - AddonManager"})
                     }}
                 />
                 <FormRow
