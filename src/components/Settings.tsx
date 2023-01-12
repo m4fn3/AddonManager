@@ -25,6 +25,7 @@ const Clipboard = getByProps('setString')
 // variables
 const GitHubIcon = getIDByName('img_account_sync_github_white')
 const TwitterIcon = getIDByName('img_account_sync_twitter_white')
+const DiscordIcon = getIDByName('Discord')
 const UpdateIcon = getIDByName('toast_image_saved')
 const ExportIcon = getIDByName('ic_reply_24px')
 const ImportIcon = getIDByName('ic_leave_stage')
@@ -130,7 +131,7 @@ export default ({settings}: SettingsProps) => {
             </FormSection>
             <FormSection title="INFORMATION">
                 <FormRow
-                    label="Twitter @m4fn3"
+                    label="Follow me on Twitter"
                     style={styles.info}
                     trailing={FormRow.Arrow}
                     leading={<FormRow.Icon source={TwitterIcon}/>}
@@ -139,7 +140,16 @@ export default ({settings}: SettingsProps) => {
                     }}
                 />
                 <FormRow
-                    label="GitHub (m4fn3)"
+                    label="Visit my server for help"
+                    style={styles.info}
+                    trailing={FormRow.Arrow}
+                    leading={<FormRow.Icon source={DiscordIcon}/>}
+                    onPress={() => {
+                        Linking.openURL("https://discord.gg/TrCqPTCrdq")
+                    }}
+                />
+                <FormRow
+                    label="Check Source on GitHub"
                     style={styles.info}
                     trailing={FormRow.Arrow}
                     leading={<FormRow.Icon source={GitHubIcon}/>}
