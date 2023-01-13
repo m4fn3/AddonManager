@@ -20,7 +20,7 @@ interface SettingsProps {
 }
 
 
-const Clipboard = getByProps('setString')
+const Invites = getByProps('acceptInviteAndTransitionToInviteChannel')
 
 // variables
 const GitHubIcon = getIDByName('img_account_sync_github_white')
@@ -145,7 +145,11 @@ export default ({settings}: SettingsProps) => {
                     trailing={FormRow.Arrow}
                     leading={<FormRow.Icon source={DiscordIcon}/>}
                     onPress={() => {
-                        Linking.openURL("https://discord.gg/TrCqPTCrdq")
+                        Invites.acceptInviteAndTransitionToInviteChannel({
+                            inviteKey: 'TrCqPTCrdq',
+                            context: {location: 'Invite Button Embed'},
+                            callback: () => {}
+                        })
                     }}
                 />
                 <FormRow
