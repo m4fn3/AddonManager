@@ -148,7 +148,7 @@ export default ({settings}: SettingsProps) => {
                         Invites.acceptInviteAndTransitionToInviteChannel({
                             inviteKey: 'TrCqPTCrdq',
                             context: {location: 'Invite Button Embed'},
-                            callback: () => {}
+                            callback: ()=>{Navigation.pop()}
                         })
                     }}
                 />
