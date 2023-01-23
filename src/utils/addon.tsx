@@ -1,5 +1,8 @@
 import {Toasts} from "enmity/metro/common"
 import {getIDByName} from "enmity/api/assets"
+import {get, set} from "enmity/api/settings";
+// @ts-ignore
+import {name} from '../../manifest.json'
 
 const FailIcon = getIDByName('Small')
 const CheckIcon = getIDByName('ic_check_24px')
@@ -70,4 +73,23 @@ function getThemes() {
     return window.enmity.themer.listThemes()
 }
 
-export {installPlugin, installTheme, getTheme, getThemes, uninstallPlugin, uninstallTheme}
+function getThemeColors(tag) {
+    try {
+        // @ts-ignore
+        let Theme = getTheme(window.enmity.themer.getTheme())
+        return Theme ? Theme.colours[tag] : undefined
+    } catch (e) {
+        return undefined
+    }
+}
+
+function setCachedUpdated(addonType, updated) {
+    set(name, `_updated_${addonType}s`, JSON.stringify(updated))
+}
+
+function getCachedUpdated(addonType) {
+    return JSON.parse(get(name, `_updated_${addonType}s`, "{}").toString())
+}
+
+
+export {installPlugin, installTheme, getTheme, getThemes, uninstallPlugin, uninstallTheme, getThemeColors, getCachedUpdated, setCachedUpdated}

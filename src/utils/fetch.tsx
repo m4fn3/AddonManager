@@ -10,7 +10,7 @@ const themeDatabaseURL = rawURL + "themes.json"
 const pluginDatabaseVerURL = rawURL + "plugins_update.txt"
 const themeDatabaseVerURL = rawURL + "themes_update.txt"
 
-function randomize(url) {
+function randomizeURL(url) {
     return `${url}?${Date.now()}`
 }
 
@@ -23,19 +23,19 @@ function getThemeDatabase() {
 }
 
 function fetchPluginDatabase() {
-    REST.get(randomize(pluginDatabaseURL)).then(databaseRaw => {
+    REST.get(randomizeURL(pluginDatabaseURL)).then(databaseRaw => {
         set(name, "plugins", databaseRaw.text)
     })
 }
 
 function fetchThemeDatabase() {
-    REST.get(randomize(themeDatabaseURL)).then(databaseRaw => {
+    REST.get(randomizeURL(themeDatabaseURL)).then(databaseRaw => {
         set(name, "themes", databaseRaw.text)
     })
 }
 
 function checkPluginDatabaseVer() {
-    REST.get(randomize(pluginDatabaseVerURL)).then(verRaw => {
+    REST.get(randomizeURL(pluginDatabaseVerURL)).then(verRaw => {
         let ver = verRaw.text
         let plugins_ver = get(name, "plugins_ver")
         if (plugins_ver) {
@@ -51,7 +51,7 @@ function checkPluginDatabaseVer() {
 }
 
 function checkThemeDatabaseVer() {
-    REST.get(randomize(themeDatabaseVerURL)).then(verRaw => {
+    REST.get(randomizeURL(themeDatabaseVerURL)).then(verRaw => {
         let ver = verRaw.text
         let themes_ver = get(name, "themes_ver")
         if (themes_ver) {
@@ -66,4 +66,4 @@ function checkThemeDatabaseVer() {
     })
 }
 
-export {fetchPluginDatabase, fetchThemeDatabase, checkPluginDatabaseVer, checkThemeDatabaseVer, getPluginDatabase, getThemeDatabase}
+export {fetchPluginDatabase, fetchThemeDatabase, checkPluginDatabaseVer, checkThemeDatabaseVer, getPluginDatabase, getThemeDatabase, randomizeURL}

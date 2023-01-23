@@ -1,26 +1,27 @@
-import {View, FormSection, FormRow, Image, Text, ScrollView} from "enmity/components"
-import {SettingsStore} from "enmity/api/settings"
-import {Constants, Navigation, React, StyleSheet, Toasts} from "enmity/metro/common"
+import {View, FormSection, FormRow, Image, Text, ScrollView, Button} from "enmity/components"
+import {Constants, Navigation, NavigationStack, React, StyleSheet, Toasts} from "enmity/metro/common"
 import {getIDByName} from "enmity/api/assets"
 import {Linking} from "enmity/metro/common"
 
 // @ts-ignore
 import {name, version} from '../../manifest.json'
 import {PluginIcon, ThemeIcon} from "../utils/icons"
-import Page from "./Page"
 import {Plugins} from "./Plugins"
 import {Themes} from "./Themes"
 import {Update} from "./Update"
 import {getByProps} from "enmity/metro"
 import {Import} from "./Import"
 import {Export} from "./Export";
-
-interface SettingsProps {
-    settings: SettingsStore
-}
-
+import {getByKeyword} from "enmity/modules"
+import {screenOptions} from "../utils/common"
+import {Detail} from "./Detail";
+import {get} from "enmity/api/settings";
+import {getTheme, installPlugin, installTheme, uninstallPlugin, uninstallTheme} from "../utils/addon";
+import {getPluginDatabase, getThemeDatabase} from "../utils/fetch";
+import {getPlugin} from "enmity/managers/plugins";
 
 const Invites = getByProps('acceptInviteAndTransitionToInviteChannel')
+const Navigator = getByKeyword("getFocusedRoute")
 
 // variables
 const GitHubIcon = getIDByName('img_account_sync_github_white')
@@ -30,10 +31,56 @@ const UpdateIcon = getIDByName('toast_image_saved')
 const ExportIcon = getIDByName('ic_reply_24px')
 const ImportIcon = getIDByName('ic_leave_stage')
 
-// setting menu
-export default ({settings}: SettingsProps) => {
+const Stack = NavigationStack.createStackNavigator()
+
+function HomeStack() {
+    return (
+        <Stack.Navigator
+            initialRouteName="Home"
+            headerMode="screen"
+            screenOptions={{
+                ...screenOptions
+            }}
+        >
+            <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            {
+                [[Plugins, "Plugins"], [Themes, "Themes"], [Export, "Export"], [Import, "Import"], [Update, "Update"]].map(([Component, name]) =>
+                    <Stack.Screen
+                        name={name}
+                        component={Component}
+                    />
+                )
+            }
+            <Stack.Screen
+                name="PluginDetail"
+                component={() => <Detail addonType="plugin"/>}
+                options={{
+                    title: ""
+                }}
+            />
+            <Stack.Screen
+                name="ThemeDetail"
+                component={() => <Detail addonType="theme"/>}
+                options={{
+                    title: ""
+                }}
+            />
+        </Stack.Navigator>
+    )
+}
+
+function Home() {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
+            backgroundColor: Constants.ThemeColorMap.BACKGROUND_PRIMARY,
+        },
+        header: {
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center"
@@ -74,10 +121,11 @@ export default ({settings}: SettingsProps) => {
             paddingBottom: 20
         }
     })
+    const Navigation = Navigator.useNavigation()
 
     return (
-        <ScrollView>
-            <View style={styles.container}>
+        <ScrollView style={styles.container}>
+            <View style={styles.header}>
                 <Image
                     source={{uri: 'https://avatars.githubusercontent.com/u/43488869'}}
                     style={styles.image}
@@ -93,7 +141,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<PluginIcon width={24} height={24}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Plugins, name: "Plugins - AddonManager"})
+                        Navigation.navigate("Plugins")
                     }}
                 />
                 <FormRow
@@ -101,7 +149,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<ThemeIcon width={24} height={24}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Themes, name: "Themes - AddonManager"})
+                        Navigation.navigate("Themes")
                     }}
                 />
                 <FormRow
@@ -109,7 +157,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<FormRow.Icon source={ExportIcon}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Export, name: "Export - AddonManager"})
+                        Navigation.navigate("Export")
                     }}
                 />
                 <FormRow
@@ -117,7 +165,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<FormRow.Icon source={ImportIcon}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Import, name: "Import - AddonManager"})
+                        Navigation.navigate("Import")
                     }}
                 />
                 <FormRow
@@ -125,7 +173,7 @@ export default ({settings}: SettingsProps) => {
                     leading={<FormRow.Icon source={UpdateIcon}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.push(Page, {component: Update, name: "Update - AddonManager"})
+                        Navigation.navigate("Update")
                     }}
                 />
             </FormSection>
@@ -148,7 +196,9 @@ export default ({settings}: SettingsProps) => {
                         Invites.acceptInviteAndTransitionToInviteChannel({
                             inviteKey: 'TrCqPTCrdq',
                             context: {location: 'Invite Button Embed'},
-                            callback: ()=>{Navigation.pop()}
+                            callback: () => {
+                                Navigation.pop()
+                            }
                         })
                     }}
                 />
@@ -168,3 +218,5 @@ export default ({settings}: SettingsProps) => {
         </ScrollView>
     )
 }
+
+export {HomeStack}

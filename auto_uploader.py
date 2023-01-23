@@ -19,11 +19,11 @@ from watchdog.observers import Observer
 port = 80
 # SSH
 # ssh_ip = "192.168.11.7"
-ssh_ip = "192.168.11.17"  # iphone7
+ssh_ip = "192.168.11.22"  # iphone7
 user = "root"
 password = "alpine"
 # plugin_dir = "/var/mobile/Containers/Data/Application/67B6DA71-D282-4C83-A7C8-17C0BF6CB9E1/Documents/Plugins/"
-plugin_dir = "/var/mobile/Containers/Data/Application/8518D615-0D41-4766-BE03-1D8862DF036D/Documents/Plugins/"  # iphone7
+plugin_dir = "/var/mobile/Containers/Data/Application/D8B7EC9A-3DB6-4D3B-B612-1A9DD16E8ACD/Documents/Plugins/"  # iphone7
 plugin_name = "AddonManager"
 
 

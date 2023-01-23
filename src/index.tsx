@@ -1,15 +1,18 @@
 import {Plugin, registerPlugin} from 'enmity/managers/plugins'
-import {React, REST, Token} from 'enmity/metro/common'
+import {Navigation, NavigationStack, React, REST, Token} from 'enmity/metro/common'
 import {create} from 'enmity/patcher'
 
 import addon from "./components/Commands"
 
 // @ts-ignore
 import manifest, {name} from '../manifest.json'
-import Settings from './components/Settings'
 import {checkPluginDatabaseVer, checkThemeDatabaseVer} from "./utils/fetch"
 import {checkUpdate} from "./utils/update"
 import "./utils/native"
+import {getByKeyword} from "enmity/modules"
+import {Import} from "./components/Import";
+import {HomeStack} from "./components/Home";
+import {setCachedUpdated} from "./utils/addon";
 
 const Patcher = create('AddonManager')
 
@@ -19,6 +22,9 @@ const AddonManager: Plugin = {
     onStart() {
         this.commands = [addon]
 
+        let addons = ["plugin", "theme"]
+        addons.forEach(addonType => setCachedUpdated(addonType, []))
+
         checkPluginDatabaseVer()
         checkThemeDatabaseVer()
         checkUpdate()
@@ -27,7 +33,7 @@ const AddonManager: Plugin = {
         Patcher.unpatchAll()
     },
     getSettingsPanel({settings}) {
-        return <Settings settings={settings}/>
+        return <HomeStack/>
     }
 }
 
