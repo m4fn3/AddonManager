@@ -28,9 +28,14 @@ function checkUpdate() {
     }
 }
 
-function isUpdate(from, to) {
-    return to.localeCompare(from, undefined, {numeric: true}) === 1
+function compare(from, to) {
+    return to.localeCompare(from, undefined, {numeric: true})
 }
+
+function isUpdate(from, to) {  // from < to
+    return compare(from, to) === 1
+}
+
 
 function getUpdatablePlugins(plugins) {
     const installedPlugins = getPlugins().map((plugin) => plugin.name)
@@ -43,4 +48,4 @@ function getUpdatableThemes(themes) {
     return installedThemes.filter((name) => Object.keys(themes).includes(name) && Object.keys(themes[name]).includes("version") && getTheme(name).version && isUpdate(getTheme(name).version, themes[name].version))
 }
 
-export {checkUpdate, getUpdatablePlugins, getUpdatableThemes}
+export {checkUpdate, getUpdatablePlugins, getUpdatableThemes, compare}

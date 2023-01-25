@@ -3,23 +3,40 @@ import {get, set} from 'enmity/api/settings'
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
 
-// const rawURL = "http://192.168.11.9:8000/" // Test
-const rawURL = "https://raw.githubusercontent.com/m4fn3/AddonManagerDatabase/master/"
+// const rawURL = "https://raw.githubusercontent.com/m4fn3/AddonManagerDatabase/master/"
+const rawURL = "https://raw.githubusercontent.com/m4fn3/Test/master/"
 const pluginDatabaseURL = rawURL + "plugins.json"
 const themeDatabaseURL = rawURL + "themes.json"
 const pluginDatabaseVerURL = rawURL + "plugins_update.txt"
 const themeDatabaseVerURL = rawURL + "themes_update.txt"
+const compatibilityURL = rawURL + "compatibility.json"
 
 function randomizeURL(url) {
     return `${url}?${Date.now()}`
 }
 
+function getDetailURL(addonType, name){
+    return `${rawURL}${addonType}s/${name}.json`
+}
+
+function parseDatabase(name){
+    try {
+        return JSON.parse(get(plugin_name, name, "{}").toString())
+    } catch {
+        return {}
+    }
+}
+
 function getPluginDatabase() {
-    return JSON.parse(get(plugin_name, "plugins", "{}").toString())
+    return parseDatabase("plugins")
 }
 
 function getThemeDatabase() {
-    return JSON.parse(get(plugin_name, "themes", "{}").toString())
+    return parseDatabase("themes")
+}
+
+function getCompatibility(){
+    return parseDatabase("compatibility")
 }
 
 function fetchPluginDatabase() {
@@ -66,4 +83,4 @@ function checkThemeDatabaseVer() {
     })
 }
 
-export {fetchPluginDatabase, fetchThemeDatabase, checkPluginDatabaseVer, checkThemeDatabaseVer, getPluginDatabase, getThemeDatabase, randomizeURL}
+export {fetchPluginDatabase, fetchThemeDatabase, checkPluginDatabaseVer, checkThemeDatabaseVer, getPluginDatabase, getThemeDatabase, randomizeURL, getDetailURL, compatibilityURL, getCompatibility}

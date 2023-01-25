@@ -1,9 +1,9 @@
 import {View, FormSection, FormRow, Image, Text, ScrollView} from "enmity/components"
-import {Constants, NavigationStack, React, StyleSheet} from "enmity/metro/common"
+import {Constants, NavigationStack, React, REST, StyleSheet} from "enmity/metro/common"
 import {Linking} from "enmity/metro/common"
 
 // @ts-ignore
-import {name, version} from '../../manifest.json'
+import {name as plugin_name, name, version} from '../../manifest.json'
 import {PluginIcon, ThemeIcon} from "../utils/icons"
 import {Plugins} from "./Plugins"
 import {Themes} from "./Themes"
@@ -13,6 +13,9 @@ import {Export} from "./Export";
 import {screenOptions} from "../utils/common"
 import {Detail} from "./Detail"
 import {Icons, Invites, Navigator} from "../utils/common"
+import {getCachedUpdated} from "../utils/addon";
+import {compatibilityURL, getDetailURL, randomizeURL} from "../utils/fetch";
+import {set} from "enmity/api/settings";
 
 
 const Stack = NavigationStack.createStackNavigator()
@@ -106,6 +109,12 @@ function Home() {
         }
     })
     const Navigation = Navigator.useNavigation()
+
+    React.useEffect(() => {
+        REST.get(randomizeURL(compatibilityURL)).then(raw => {
+            set(plugin_name, "compatibility", raw.text)
+        })
+    }, [])
 
     return (
         <ScrollView style={styles.container}>

@@ -1,6 +1,5 @@
 import {FormRow, ScrollView, FormSection, FormSwitch} from 'enmity/components'
 import {React, StyleSheet, Constants} from 'enmity/metro/common'
-import {getIDByName} from "enmity/api/assets"
 
 import {installPlugin, installTheme, getTheme, getCachedUpdated, addCachedUpdated} from "../utils/addon"
 import {getPlugin} from "enmity/managers/plugins"

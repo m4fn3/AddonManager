@@ -3,12 +3,13 @@ import {React, StyleSheet, Constants, REST} from 'enmity/metro/common'
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
 import {get} from "enmity/api/settings"
-import {getPluginDatabase, getThemeDatabase, randomizeURL} from "../utils/fetch"
+import {getCompatibility, getDetailURL, getPluginDatabase, getThemeDatabase, randomizeURL} from "../utils/fetch"
 import {PluginIcon, ThemeIcon} from "../utils/icons"
 import {getPlugin} from "enmity/managers/plugins"
 import {getTheme, getThemeColors, installPlugin, installTheme, addCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
-import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
+import {compare, getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
 import {ReactNative, Video} from "../utils/common"
+import {version} from "enmity/api/native";
 
 function Detail({addonType}) {
     let bgColor = getThemeColors("PRIMARY_DARK_500")
@@ -59,7 +60,7 @@ function Detail({addonType}) {
         addonEditText: {
             color: Constants.ThemeColorMap.HEADER_PRIMARY,
             fontFamily: Constants.Fonts.PRIMARY_SEMIBOLD
-        }
+        },
     })
 
     // https://justacoding.blog/how-to-make-part-of-the-text-bold-in-react-native/
@@ -76,9 +77,11 @@ function Detail({addonType}) {
     let isUpdatable = updatableAddons.includes(addonName)
     const [updatable, setUpdatable] = React.useState(isUpdatable)
     const [editText, setEditText] = React.useState(installed ? (updatable ? "UPDATE" : "REMOVE") : "GET")
+    const [notice, setNotice] = React.useState(undefined)
+
 
     React.useEffect(() => {
-        REST.get(randomizeURL(`https://raw.githubusercontent.com/m4fn3/Test/master/${addonType}s/${addonName}.json`)).then(raw => {
+        REST.get(randomizeURL(getDetailURL(addonType, addonName))).then(raw => {
             let data = JSON.parse(raw.text)
             setDescription(data.description)
             let draftPreviews = Object.assign(
@@ -95,6 +98,16 @@ function Detail({addonType}) {
                 setDescription("No description.")
             }
         })
+
+        const compat = getCompatibility()
+        if (addonName in compat[addonType]) {
+            let vers = compat[addonType][addonName].ver.split("~")
+            let min_ = vers[0] ? vers[0] : "0.0"
+            let max_ = vers[1] ? vers[1] : "999.0"
+            if (!(compare(min_, version) >= 0 && compare(version, max_) >= 0)) { // not min <= version <= max
+                setNotice(compat[addonType][addonName].text + `\n\nCompatibility: ${compat[addonType][addonName].ver} ( currently on ${version})`)
+            }
+        }
     }, [])
 
     return (
@@ -127,6 +140,14 @@ function Detail({addonType}) {
                     </TouchableOpacity>}
                 subLabel={data.description}
             />
+            {
+                [1].filter(_ => Boolean(notice)).map(_ => (
+                    <>
+                        <Text style={[styles.sectionTitle, {color: "#e74c3c"}]}>Notice</Text>
+                        <Text style={[styles.sectionContent, {borderColor: "#e74c3c"}]}>{notice}</Text>
+                    </>
+                ))
+            }
             <FlatList
                 horizontal={true}
                 data={previews}
