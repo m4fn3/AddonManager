@@ -13,8 +13,7 @@ import {Export} from "./Export";
 import {screenOptions} from "../utils/common"
 import {Detail} from "./Detail"
 import {Icons, Invites, Navigator} from "../utils/common"
-import {getCachedUpdated} from "../utils/addon";
-import {compatibilityURL, getDetailURL, randomizeURL} from "../utils/fetch";
+import {compatibilityURL, randomizeURL} from "../utils/fetch";
 import {set} from "enmity/api/settings";
 
 

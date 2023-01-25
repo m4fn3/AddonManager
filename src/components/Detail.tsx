@@ -1,5 +1,5 @@
 import {ScrollView, Text, Image, FlatList, FormRow, TouchableOpacity} from 'enmity/components'
-import {React, StyleSheet, Constants, REST} from 'enmity/metro/common'
+import {React, StyleSheet, Constants, REST, Linking, Toasts} from 'enmity/metro/common'
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
 import {get} from "enmity/api/settings"
@@ -8,7 +8,7 @@ import {PluginIcon, ThemeIcon} from "../utils/icons"
 import {getPlugin} from "enmity/managers/plugins"
 import {getTheme, getThemeColors, installPlugin, installTheme, addCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
 import {compare, getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
-import {ReactNative, Video} from "../utils/common"
+import {Clipboard, Icons, ReactNative, Video} from "../utils/common"
 import {version} from "enmity/api/native";
 
 function Detail({addonType}) {
@@ -61,11 +61,14 @@ function Detail({addonType}) {
             color: Constants.ThemeColorMap.HEADER_PRIMARY,
             fontFamily: Constants.Fonts.PRIMARY_SEMIBOLD
         },
+        hyperLink: {
+            color: Constants.ThemeColorMap.TEXT_LINK
+        }
     })
 
     // https://justacoding.blog/how-to-make-part-of-the-text-bold-in-react-native/
     const screen_width = ReactNative.useWindowDimensions().width
-    const [description, setDescription] = React.useState("Loading description...")
+    const [description, setDescription] = React.useState(["Loading description..."])
     const [previews, setPreviews] = React.useState([])
     const addonName = get(plugin_name, `_selected_${addonType}`).toString()
 
@@ -83,7 +86,8 @@ function Detail({addonType}) {
     React.useEffect(() => {
         REST.get(randomizeURL(getDetailURL(addonType, addonName))).then(raw => {
             let data = JSON.parse(raw.text)
-            setDescription(data.description)
+            let description = data.description.replace(/(\bhttps?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*)/ig, "<l>$1<l>").split("<l>")
+            setDescription(description)
             let draftPreviews = Object.assign(
                 data.images.map((url) => {
                     return {"url": url, "width": 1, "height": 1, "type": "image"}
@@ -95,10 +99,11 @@ function Detail({addonType}) {
             setPreviews(draftPreviews)
         }).catch(response => {
             if (response.status === 404) {
-                setDescription("No description.")
+                setDescription(["No description."])
             }
         })
 
+        // 互換性
         const compat = getCompatibility()
         if (addonName in compat[addonType]) {
             let vers = compat[addonType][addonName].ver.split("~")
@@ -195,7 +200,42 @@ function Detail({addonType}) {
                 showsHorizontalScrollIndicator={true}
             />
             <Text style={styles.sectionTitle}>Description</Text>
-            <Text style={styles.sectionContent}>{description}</Text>
+
+            <Text style={styles.sectionContent}>
+                {
+                    description.map((content) => {
+                        if (content.startsWith("http")) {
+                            return (
+                                <Text
+                                    style={styles.hyperLink}
+                                    onPress={() => {
+                                        let download_link = addonType == "plugin" ? ".js" : ".json"
+                                        if (content.endsWith(download_link)) {
+                                            if (addonType == "plugin") installPlugin(addonName, content)
+                                            else installTheme(addonName, content)
+                                        } else {
+                                            Linking.openURL(content)
+                                        }
+                                    }}
+                                    onLongPress={() => {
+                                        Clipboard.setString(content)
+                                        Toasts.open({
+                                            content: `Copied URL to clipboard`,
+                                            source: Icons.Copy
+                                        })
+                                    }}
+                                >
+                                    {content}
+                                </Text>
+                            )
+                        } else {
+                            return (
+                                <Text>{content}</Text>
+                            )
+                        }
+                    })
+                }
+            </Text>
         </ScrollView>
     )
 }

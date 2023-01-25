@@ -9,9 +9,9 @@ import manifest from '../manifest.json'
 import {checkPluginDatabaseVer, checkThemeDatabaseVer} from "./utils/fetch"
 import {checkUpdate} from "./utils/update"
 import "./utils/native"
-import {HomeStack} from "./components/Home";
-import {resetCachedUpdated} from "./utils/addon";
-import Page from "./components/Page";
+import {HomeStack} from "./components/Home"
+import {resetCachedUpdated} from "./utils/addon"
+import Page from "./components/Page"
 
 const Patcher = create('AddonManager')
 
