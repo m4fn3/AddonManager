@@ -1,7 +1,7 @@
 {
    "name": "addon-manager",
    "description": "Manage plugins & themes easily!",
-   "version": "1.0.1",
+   "version": "1.1.0",
    "license": "GPL-3.0",
    "author": "mafu (Zoey & eternal for template)",
    "scripts": {
