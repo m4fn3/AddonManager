@@ -11,7 +11,6 @@ import {checkUpdate} from "./utils/update"
 import "./utils/native"
 import {HomeStack} from "./components/Home"
 import {resetCachedUpdated} from "./utils/addon"
-import Page from "./components/Page"
 
 const Patcher = create('AddonManager')
 
@@ -23,12 +22,6 @@ const AddonManager: Plugin = {
 
         let addons = ["plugin", "theme"]
         addons.forEach(addonType => resetCachedUpdated(addonType))
-
-        // TODO: TEST
-        setTimeout(
-            () => Navigation.push(Page, {component: HomeStack, name: "AddonManager"})
-            , 300
-        )
 
         checkPluginDatabaseVer()
         checkThemeDatabaseVer()
