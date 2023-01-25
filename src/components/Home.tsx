@@ -1,6 +1,5 @@
-import {View, FormSection, FormRow, Image, Text, ScrollView, Button} from "enmity/components"
-import {Constants, Navigation, NavigationStack, React, StyleSheet, Toasts} from "enmity/metro/common"
-import {getIDByName} from "enmity/api/assets"
+import {View, FormSection, FormRow, Image, Text, ScrollView} from "enmity/components"
+import {Constants, NavigationStack, React, StyleSheet} from "enmity/metro/common"
 import {Linking} from "enmity/metro/common"
 
 // @ts-ignore
@@ -9,27 +8,12 @@ import {PluginIcon, ThemeIcon} from "../utils/icons"
 import {Plugins} from "./Plugins"
 import {Themes} from "./Themes"
 import {Update} from "./Update"
-import {getByProps} from "enmity/metro"
 import {Import} from "./Import"
 import {Export} from "./Export";
-import {getByKeyword} from "enmity/modules"
 import {screenOptions} from "../utils/common"
-import {Detail} from "./Detail";
-import {get} from "enmity/api/settings";
-import {getTheme, installPlugin, installTheme, uninstallPlugin, uninstallTheme} from "../utils/addon";
-import {getPluginDatabase, getThemeDatabase} from "../utils/fetch";
-import {getPlugin} from "enmity/managers/plugins";
+import {Detail} from "./Detail"
+import {Icons, Invites, Navigator} from "../utils/common"
 
-const Invites = getByProps('acceptInviteAndTransitionToInviteChannel')
-const Navigator = getByKeyword("getFocusedRoute")
-
-// variables
-const GitHubIcon = getIDByName('img_account_sync_github_white')
-const TwitterIcon = getIDByName('img_account_sync_twitter_white')
-const DiscordIcon = getIDByName('Discord')
-const UpdateIcon = getIDByName('toast_image_saved')
-const ExportIcon = getIDByName('ic_reply_24px')
-const ImportIcon = getIDByName('ic_leave_stage')
 
 const Stack = NavigationStack.createStackNavigator()
 
@@ -154,7 +138,7 @@ function Home() {
                 />
                 <FormRow
                     label="Export addons"
-                    leading={<FormRow.Icon source={ExportIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Export}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         Navigation.navigate("Export")
@@ -162,7 +146,7 @@ function Home() {
                 />
                 <FormRow
                     label="Import addons"
-                    leading={<FormRow.Icon source={ImportIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Import}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         Navigation.navigate("Import")
@@ -170,7 +154,7 @@ function Home() {
                 />
                 <FormRow
                     label="Update addons"
-                    leading={<FormRow.Icon source={UpdateIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Update}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         Navigation.navigate("Update")
@@ -182,7 +166,7 @@ function Home() {
                     label="Follow me on Twitter"
                     style={styles.info}
                     trailing={FormRow.Arrow}
-                    leading={<FormRow.Icon source={TwitterIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Twitter}/>}
                     onPress={() => {
                         Linking.openURL("https://twitter.com/m4fn3")
                     }}
@@ -191,7 +175,7 @@ function Home() {
                     label="Visit my server for help"
                     style={styles.info}
                     trailing={FormRow.Arrow}
-                    leading={<FormRow.Icon source={DiscordIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Discord}/>}
                     onPress={() => {
                         Invites.acceptInviteAndTransitionToInviteChannel({
                             inviteKey: 'TrCqPTCrdq',
@@ -206,7 +190,7 @@ function Home() {
                     label="Check Source on GitHub"
                     style={styles.info}
                     trailing={FormRow.Arrow}
-                    leading={<FormRow.Icon source={GitHubIcon}/>}
+                    leading={<FormRow.Icon source={Icons.GitHub}/>}
                     onPress={() => {
                         Linking.openURL("https://github.com/m4fn3/AddonManager")
                     }}

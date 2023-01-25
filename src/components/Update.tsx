@@ -1,21 +1,16 @@
 import {FormRow, ScrollView, FormSection, FormSwitch} from 'enmity/components'
 import {React, StyleSheet, Constants} from 'enmity/metro/common'
-import {getIDByName} from "enmity/api/assets";
+import {getIDByName} from "enmity/api/assets"
 
 import {installPlugin, installTheme, getTheme, getCachedUpdated, setCachedUpdated} from "../utils/addon"
 import {getPlugin} from "enmity/managers/plugins"
-import {getPluginDatabase, getThemeDatabase} from "../utils/fetch";
-import {get, set} from "enmity/api/settings";
+import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
+import {get, set} from "enmity/api/settings"
 
 // @ts-ignore
 import {name} from '../../manifest.json'
 import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
-import {getByKeyword} from "enmity/modules"
-
-const DownloadIcon = getIDByName('ic_download_24px')
-const UpdateIcon = getIDByName('ic_copy_message_link')
-
-const Navigator = getByKeyword("getFocusedRoute")
+import {Navigator, Icons} from "../utils/common"
 
 function Update() {
 
@@ -48,7 +43,7 @@ function Update() {
             <FormSection title="UPDATE">
                 <FormRow
                     label="Check updates on startup"
-                    leading={<FormRow.Icon source={UpdateIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Update}/>}
                     trailing={
                         <FormSwitch
                             value={switchVal}
@@ -68,7 +63,7 @@ function Update() {
                             : <FormRow
                                 label={name ? `${name} - v${getPlugin(name).version} -> v${plugins[name].version}` : name}
                                 subLabel={plugins[name].description}
-                                leading={<FormRow.Icon source={DownloadIcon}/>}
+                                leading={<FormRow.Icon source={Icons.Download}/>}
                                 trailing={FormRow.Arrow}
                                 onPress={() => {
                                     set(name, "_selected_plugin", name)
@@ -93,7 +88,7 @@ function Update() {
                             : <FormRow
                                 label={name ? `${name} - v${getTheme(name).version} -> v${themes[name].version}` : name}
                                 subLabel={themes[name].description}
-                                leading={<FormRow.Icon source={DownloadIcon}/>}
+                                leading={<FormRow.Icon source={Icons.Download}/>}
                                 trailing={FormRow.Arrow}
                                 onPress={() => {
                                     set(name, "_selected_theme", name)

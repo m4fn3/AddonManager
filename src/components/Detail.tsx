@@ -2,17 +2,13 @@ import {ScrollView, Text, Image, FlatList, FormRow, TouchableOpacity} from 'enmi
 import {React, StyleSheet, Constants, REST} from 'enmity/metro/common'
 // @ts-ignore
 import {name} from '../../manifest.json'
-import {get, set} from "enmity/api/settings"
+import {get} from "enmity/api/settings"
 import {getPluginDatabase, getThemeDatabase, randomizeURL} from "../utils/fetch"
-import {getByProps} from "enmity/metro"
-import {PluginIcon, ThemeIcon} from "../utils/icons";
-import {getPlugin} from "enmity/managers/plugins";
-import {getCachedUpdated, getTheme, getThemeColors, installPlugin, installTheme, setCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon";
-import addon from "./Commands";
-import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update";
-
-const ReactNative = getByProps("AppState")
-const Video = getByProps("DRMType", "FilterType").default
+import {PluginIcon, ThemeIcon} from "../utils/icons"
+import {getPlugin} from "enmity/managers/plugins"
+import {getCachedUpdated, getTheme, getThemeColors, installPlugin, installTheme, setCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
+import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
+import {ReactNative, Video} from "../utils/common"
 
 function Detail({addonType}) {
     let bgColor = getThemeColors("PRIMARY_DARK_500")

@@ -8,12 +8,8 @@ import {set} from "enmity/api/settings"
 // @ts-ignore
 import {name} from "../../manifest.json"
 import {getThemes} from "../utils/addon"
+import {Search, Navigator, Icons} from "../utils/common"
 
-const DownloadIcon = getIDByName('ic_download_24px')
-const UninstallIcon = getIDByName('ic_trash_24px')
-
-const Search = getByName('StaticSearchBarContainer')
-const Navigator = getByKeyword("getFocusedRoute")
 
 function Themes() {
     const styles = StyleSheet.createThemedStyleSheet({
@@ -39,7 +35,7 @@ function Themes() {
                     <FormRow
                         label={themes[key].version ? `${key} - v${themes[key].version}` : key}
                         subLabel={themes[key].description}
-                        leading={installedThemes.includes(key) ? <FormRow.Icon source={UninstallIcon}/> : <FormRow.Icon source={DownloadIcon}/>}
+                        leading={installedThemes.includes(key) ? <FormRow.Icon source={Icons.Uninstall}/> : <FormRow.Icon source={Icons.Download}/>}
                         trailing={FormRow.Arrow}
                         onPress={() => {
                             set(name, "_selected_theme", key)

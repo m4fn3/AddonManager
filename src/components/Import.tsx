@@ -1,18 +1,11 @@
-import {FormRow, ScrollView, FormSection, TextInput, FormDivider} from 'enmity/components'
+import {FormRow, ScrollView, FormSection, TextInput} from 'enmity/components'
 import {React, StyleSheet, Constants, Toasts} from 'enmity/metro/common'
-import {getIDByName} from "enmity/api/assets";
 
 import {getThemes, installPlugin, installTheme} from "../utils/addon"
 import {getPlugins} from "enmity/managers/plugins"
-import {getPluginDatabase, getThemeDatabase} from "../utils/fetch";
-import {fetchNote} from "../utils/note";
-
-const FailIcon = getIDByName('Small')
-const DownloadIcon = getIDByName('ic_download_24px')
-const CheckIcon = getIDByName('ic_check_24px')
-const ImportIcon = getIDByName('ic_leave_stage')
-const ClearIcon = getIDByName('ic_input_clear_24px')
-
+import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
+import {fetchNote} from "../utils/note"
+import {Icons} from "../utils/common"
 
 function Import() {
 
@@ -56,21 +49,13 @@ function Import() {
             let text = error ? error : "Invalid text format. Please make sure that you entered correct text."
             Toasts.open({
                 content: text,
-                source: FailIcon
+                source: Icons.Fail
             })
             return false
         } else {
             return content
         }
     }
-
-    // React.useEffect(() => { // 自動読込
-    //     let copied = Clipboard.getString()
-    //     let content =copied.split("|")
-    //     if (content.length == 2) {
-    //         processExportedText(content)
-    //     }
-    // }, [])
 
     let importText
 
@@ -81,7 +66,7 @@ function Import() {
                     style={styles.importBackup}
                     label="Import from backup"
                     subLabel="Import installed addons from backup that linked to your discord account."
-                    leading={<FormRow.Icon source={ImportIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Import}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         fetchNote("1048982327809818706").then((text) => {
@@ -90,7 +75,7 @@ function Import() {
                                 processExportedText(res)
                                 Toasts.open({
                                     content: "Successfully imported addons from backup!",
-                                    source: CheckIcon
+                                    source: Icons.Check
                                 })
                             }
                         })
@@ -129,7 +114,7 @@ function Import() {
                             : <FormRow
                                 label={pluginList[name].version ? `${name} - v${pluginList[name].version}` : name}
                                 subLabel={pluginList[name].description}
-                                leading={pluginList[name].installed ? <FormRow.Icon source={CheckIcon}/> : <FormRow.Icon source={DownloadIcon}/>}
+                                leading={pluginList[name].installed ? <FormRow.Icon source={Icons.Check}/> : <FormRow.Icon source={Icons.Download}/>}
                                 trailing={pluginList[name].installed ? undefined : FormRow.Arrow}
                                 onPress={() => {
                                     installPlugin(name, plugins[name].url, () => {
@@ -150,7 +135,7 @@ function Import() {
                             : <FormRow
                                 label={themeList[name].version ? `${name} - v${themeList[name].version}` : name}
                                 subLabel={themeList[name].description}
-                                leading={themeList[name].installed ? <FormRow.Icon source={CheckIcon}/> : <FormRow.Icon source={DownloadIcon}/>}
+                                leading={themeList[name].installed ? <FormRow.Icon source={Icons.Check}/> : <FormRow.Icon source={Icons.Download}/>}
                                 trailing={themeList[name].installed ? undefined : FormRow.Arrow}
                                 onPress={() => {
                                     installTheme(name, themes[name].url, () => {

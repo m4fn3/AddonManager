@@ -5,17 +5,10 @@ import {set} from "enmity/api/settings"
 
 import {installPlugin, uninstallPlugin} from "../utils/addon"
 import {getPlugins} from "enmity/managers/plugins"
-import {getIDByName} from "enmity/api/assets"
 import {getPluginDatabase} from "../utils/fetch"
 // @ts-ignore
 import {name} from '../../manifest.json'
-import {getByKeyword} from "enmity/modules"
-
-const DownloadIcon = getIDByName('ic_download_24px')
-const UninstallIcon = getIDByName('ic_trash_24px')
-
-const Search = getByName('StaticSearchBarContainer')
-const Navigator = getByKeyword("getFocusedRoute")
+import {Search, Navigator, Icons} from "../utils/common"
 
 function Plugins() {
     const styles = StyleSheet.createThemedStyleSheet({
@@ -42,7 +35,7 @@ function Plugins() {
                     <FormRow
                         label={plugins[key].version ? `${key} - v${plugins[key].version}` : key}
                         subLabel={plugins[key].description}
-                        leading={installedPlugins.includes(key) ? <FormRow.Icon source={UninstallIcon}/> : <FormRow.Icon source={DownloadIcon}/>}
+                        leading={installedPlugins.includes(key) ? <FormRow.Icon source={Icons.Uninstall}/> : <FormRow.Icon source={Icons.Download}/>}
                         trailing={FormRow.Arrow}
                         onPress={() => {
                             set(name, "_selected_plugin", key)

@@ -3,10 +3,7 @@ import {getIDByName} from "enmity/api/assets"
 import {get, set} from "enmity/api/settings";
 // @ts-ignore
 import {name} from '../../manifest.json'
-
-const FailIcon = getIDByName('Small')
-const CheckIcon = getIDByName('ic_check_24px')
-
+import {Icons} from "./common"
 
 function installPlugin(name, url, callback = () => {
 }) {
@@ -15,12 +12,12 @@ function installPlugin(name, url, callback = () => {
         if (data.name === undefined) {
             Toasts.open({
                 content: `Failed to install ${name}`,
-                source: FailIcon
+                source: Icons.Fail
             })
         } else {
             Toasts.open({
                 content: `Successfully installed ${name}!`,
-                source: CheckIcon
+                source: Icons.Check
             })
             callback()
         }
@@ -33,7 +30,7 @@ function uninstallPlugin(name, callback = () => {
     window.enmity.plugins.uninstallPlugin(name, (data) => {
         Toasts.open({
             content: `Successfully uninstalled ${name}!`,
-            source: CheckIcon
+            source: Icons.Check
         })
         callback()
     })
@@ -45,7 +42,7 @@ function installTheme(name, url, callback = () => {
     window.enmity.themer.installTheme(url, (data) => {
         Toasts.open({
             content: `Successfully installed ${name}!`,
-            source: CheckIcon
+            source: Icons.Check
         })
         callback()
     })
@@ -57,7 +54,7 @@ function uninstallTheme(name, callback = () => {
     window.enmity.themer.uninstallTheme(name, (data) => {
         Toasts.open({
             content: `Successfully uninstalled ${name}!`,
-            source: CheckIcon
+            source: Icons.Check
         })
         callback()
     })

@@ -1,7 +1,7 @@
 // from https://github.com/enmity-mod/enmity/tree/main/src/core/screens/partials
 
-import { SVG, StyleSheet, ColorMap, React } from 'enmity/metro/common';
-const { ThemeColorMap } = ColorMap;
+import { SVG, StyleSheet, ColorMap, React } from 'enmity/metro/common'
+const { ThemeColorMap } = ColorMap
 
 export function PluginIcon({ height, width, ...rest }) {
   const styles = StyleSheet.createThemedStyleSheet({

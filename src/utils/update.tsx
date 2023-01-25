@@ -2,13 +2,12 @@ import {get, set} from "enmity/api/settings"
 
 // @ts-ignore
 import {name} from '../../manifest.json'
-import {getPluginDatabase, getThemeDatabase} from "./fetch";
-import {getPlugin, getPlugins} from "enmity/managers/plugins";
-import {getTheme, getThemes} from "./addon";
-import {Toasts} from "enmity/metro/common";
-import {getIDByName} from "enmity/api/assets";
-
-const DownloadIcon = getIDByName('ic_download_24px')
+import {getPluginDatabase, getThemeDatabase} from "./fetch"
+import {getPlugin, getPlugins} from "enmity/managers/plugins"
+import {getTheme, getThemes} from "./addon"
+import {Toasts} from "enmity/metro/common"
+import {getIDByName} from "enmity/api/assets"
+import {Icons} from "./common"
 
 function checkUpdate() {
     let val = get(name, "check_updates")
@@ -24,7 +23,7 @@ function checkUpdate() {
             let text = updatableAddons.join(", ")
             Toasts.open({
                 content: `Updates are available for ${text}`,
-                source: DownloadIcon
+                source: Icons.Download
             })
         }
     }

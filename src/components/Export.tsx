@@ -1,17 +1,12 @@
-import {Constants, React, StyleSheet, Toasts} from "enmity/metro/common";
-import {get, set} from "enmity/api/settings";
-import {FormRow, FormSection, FormSwitch, ScrollView} from "enmity/components";
-import {getPlugins} from "enmity/managers/plugins";
-import {getByProps} from "enmity/metro";
-import {getIDByName} from "enmity/api/assets";
+import {Constants, React, StyleSheet, Toasts} from "enmity/metro/common"
+import {get, set} from "enmity/api/settings"
+import {FormRow, FormSection, FormSwitch, ScrollView} from "enmity/components"
+import {getPlugins} from "enmity/managers/plugins"
 
 // @ts-ignore
 import {name} from '../../manifest.json'
-import {getThemes} from "../utils/addon";
-
-const Clipboard = getByProps('setString')
-const copyIcon = getIDByName('ic_message_copy')
-const ExportIcon = getIDByName('ic_reply_24px')
+import {getThemes} from "../utils/addon"
+import {Clipboard, Icons} from "../utils/common"
 
 export function createExportText() {
     let plugins = getPlugins().map((plugin) => plugin.name).join(";")
@@ -36,7 +31,7 @@ function Export() {
                 <FormRow
                     label="Automatically create backup"
                     subLabel="Automatically save backup of installed addons. It will be linked with your discord account."
-                    leading={<FormRow.Icon source={ExportIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Export}/>}
                     trailing={
                         <FormSwitch
                             value={switchVal}
@@ -52,13 +47,13 @@ function Export() {
                 <FormRow
                     label="Export addons as text"
                     subLabel="Export installed addons as text that you can import manually."
-                    leading={<FormRow.Icon source={copyIcon}/>}
+                    leading={<FormRow.Icon source={Icons.Copy}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         Clipboard.setString(createExportText())
                         Toasts.open({
                             content: "Copied addon list to clipboard!",
-                            source: copyIcon
+                            source: Icons.Copy
                         })
                     }}
                 />

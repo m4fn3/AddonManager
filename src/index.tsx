@@ -1,5 +1,5 @@
 import {Plugin, registerPlugin} from 'enmity/managers/plugins'
-import {Navigation, NavigationStack, React, REST, Token} from 'enmity/metro/common'
+import {React} from 'enmity/metro/common'
 import {create} from 'enmity/patcher'
 
 import addon from "./components/Commands"
@@ -9,8 +9,6 @@ import manifest, {name} from '../manifest.json'
 import {checkPluginDatabaseVer, checkThemeDatabaseVer} from "./utils/fetch"
 import {checkUpdate} from "./utils/update"
 import "./utils/native"
-import {getByKeyword} from "enmity/modules"
-import {Import} from "./components/Import";
 import {HomeStack} from "./components/Home";
 import {setCachedUpdated} from "./utils/addon";
 

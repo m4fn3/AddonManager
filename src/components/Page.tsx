@@ -1,15 +1,15 @@
-import {React, Navigation, NavigationNative, NavigationStack, StyleSheet, ColorMap} from 'enmity/metro/common';
-import {Button, View} from 'enmity/components';
-import {getPlugin} from "enmity/managers/plugins";
-import {get} from "enmity/api/settings";
-import {installPlugin, uninstallPlugin} from "../utils/addon";
-import {getPluginDatabase} from "../utils/fetch";
+import {React, Navigation, NavigationNative, NavigationStack, StyleSheet, ColorMap} from 'enmity/metro/common'
+import {Button, View} from 'enmity/components'
+import {getPlugin} from "enmity/managers/plugins"
+import {get} from "enmity/api/settings"
+import {installPlugin, uninstallPlugin} from "../utils/addon"
+import {getPluginDatabase} from "../utils/fetch"
 // @ts-ignore
 import {name as name_} from '../../manifest.json'
 
-export const Settings = NavigationStack.createStackNavigator();
+const Settings = NavigationStack.createStackNavigator()
 
-const {ThemeColorMap} = ColorMap;
+const {ThemeColorMap} = ColorMap
 
 export default ({name = 'AddonManager', component = View, detail = null} = {}) => {
     const styles = StyleSheet.createThemedStyleSheet({

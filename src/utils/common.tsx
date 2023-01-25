@@ -1,9 +1,34 @@
-import {Constants, React, StyleSheet} from "enmity/metro/common";
-import {getIDByName} from "enmity/api/assets";
-import {getByName} from "enmity/metro";
+import {Constants, React, StyleSheet} from "enmity/metro/common"
+import {getIDByName} from "enmity/api/assets"
+import {getByName, getByProps} from "enmity/metro"
+import {getByKeyword} from "enmity/modules"
 
+// modules
 const Icon = getByName("Icon")
+const Navigator = getByKeyword("getFocusedRoute")
+const Search = getByName('StaticSearchBarContainer')
+const Invites = getByProps('acceptInviteAndTransitionToInviteChannel')
+const ReactNative = getByProps("AppState")
+const Video = getByProps("DRMType", "FilterType").default
+const Clipboard = getByProps('setString')
 
+// icons
+const Icons = {
+    Copy: getIDByName('ic_message_copy'),
+    GitHub: getIDByName('img_account_sync_github_white'),
+    Twitter: getIDByName('img_account_sync_twitter_white'),
+    Discord: getIDByName('Discord'),
+    Update: getIDByName('toast_image_saved'),
+    Export: getIDByName('ic_reply_24px'),
+    Import: getIDByName('ic_leave_stage'),
+    Fail: getIDByName('Small'),
+    Download: getIDByName('ic_download_24px'),
+    Check: getIDByName('ic_check_24px'),
+    Clear: getIDByName('ic_input_clear_24px'),
+    Uninstall: getIDByName('ic_trash_24px'),
+}
+
+// styles
 const stackStyles = StyleSheet.createThemedStyleSheet({
     cardStyle: {
         backgroundColor: Constants.ThemeColorMap.BACKGROUND_MOBILE_PRIMARY,
@@ -32,4 +57,4 @@ const screenOptions = {
     },
 }
 
-export {screenOptions}
+export {screenOptions, Icons, Navigator, Search, Invites, ReactNative, Video, Clipboard}
