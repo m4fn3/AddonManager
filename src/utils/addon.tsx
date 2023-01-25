@@ -2,7 +2,7 @@ import {Toasts} from "enmity/metro/common"
 import {getIDByName} from "enmity/api/assets"
 import {get, set} from "enmity/api/settings";
 // @ts-ignore
-import {name} from '../../manifest.json'
+import {name as plugin_name} from '../../manifest.json'
 import {Icons} from "./common"
 
 function installPlugin(name, url, callback = () => {
@@ -83,16 +83,15 @@ function getThemeColors(tag) {
 function addCachedUpdated(addonType, name) {
     let updated = getCachedUpdated("plugin")
     updated.push(name)
-    set(name, `_updated_${addonType}s`, JSON.stringify(updated))
+    set(plugin_name, `_updated_${addonType}s`, JSON.stringify(updated))
 }
 
-function setCachedUpdated(addonType){
-    set(name, `_updated_${addonType}s`, "{}")
+function resetCachedUpdated(addonType){
+    set(plugin_name, `_updated_${addonType}s`, "[]")
 }
 
 function getCachedUpdated(addonType) {
-    return JSON.parse(get(name, `_updated_${addonType}s`, "{}").toString())
+    return JSON.parse(get(plugin_name, `_updated_${addonType}s`, "[]").toString())
 }
 
-
-export {installPlugin, installTheme, getTheme, getThemes, uninstallPlugin, uninstallTheme, getThemeColors, getCachedUpdated, addCachedUpdated, setCachedUpdated}
+export {installPlugin, installTheme, getTheme, getThemes, uninstallPlugin, uninstallTheme, getThemeColors, getCachedUpdated, addCachedUpdated, resetCachedUpdated}

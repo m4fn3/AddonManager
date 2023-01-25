@@ -1,12 +1,12 @@
 import {ScrollView, Text, Image, FlatList, FormRow, TouchableOpacity} from 'enmity/components'
 import {React, StyleSheet, Constants, REST} from 'enmity/metro/common'
 // @ts-ignore
-import {name} from '../../manifest.json'
+import {name as plugin_name} from '../../manifest.json'
 import {get} from "enmity/api/settings"
 import {getPluginDatabase, getThemeDatabase, randomizeURL} from "../utils/fetch"
 import {PluginIcon, ThemeIcon} from "../utils/icons"
 import {getPlugin} from "enmity/managers/plugins"
-import {getCachedUpdated, getTheme, getThemeColors, installPlugin, installTheme, addCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
+import {getTheme, getThemeColors, installPlugin, installTheme, addCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
 import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
 import {ReactNative, Video} from "../utils/common"
 
@@ -66,7 +66,7 @@ function Detail({addonType}) {
     const screen_width = ReactNative.useWindowDimensions().width
     const [description, setDescription] = React.useState("Loading description...")
     const [previews, setPreviews] = React.useState([])
-    const addonName = get(name, `_selected_${addonType}`).toString()
+    const addonName = get(plugin_name, `_selected_${addonType}`).toString()
 
     const addons = addonType == "plugin" ? getPluginDatabase() : getThemeDatabase()
     const data = addons[addonName]
@@ -107,7 +107,6 @@ function Detail({addonType}) {
                     <TouchableOpacity
                         style={styles.addonEdit}
                         onPress={() => {
-                            console.log(`- ${updatable} ${getPlugin(addonName)}`)
                             if (addonType == "plugin") {
                                 if (getPlugin(addonName) && !updatable) uninstallPlugin(addonName, () => setEditText("GET"))
                                 else installPlugin(addonName, data.url, () => {

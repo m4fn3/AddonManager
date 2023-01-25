@@ -1,18 +1,17 @@
 import {get, set} from "enmity/api/settings"
 
 // @ts-ignore
-import {name} from '../../manifest.json'
+import {name as plugin_name} from '../../manifest.json'
 import {getPluginDatabase, getThemeDatabase} from "./fetch"
 import {getPlugin, getPlugins} from "enmity/managers/plugins"
 import {getTheme, getThemes} from "./addon"
 import {Toasts} from "enmity/metro/common"
-import {getIDByName} from "enmity/api/assets"
 import {Icons} from "./common"
 
 function checkUpdate() {
-    let val = get(name, "check_updates")
+    let val = get(plugin_name, "check_updates")
     if (val === undefined) {
-        set(name, "check_updates", false)
+        set(plugin_name, "check_updates", false)
     } else if (val) {
         const plugins = getPluginDatabase()
         const themes = getThemeDatabase()

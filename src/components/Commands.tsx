@@ -1,8 +1,6 @@
 import {Command, ApplicationCommandType} from "enmity/api/commands"
 import {Navigation} from "enmity/metro/common"
 
-// @ts-ignore
-import { name } from '../../manifest.json'
 import Page from "./Page";
 import {HomeStack} from "./Home";
 

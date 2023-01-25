@@ -3,7 +3,7 @@ import {Constants, React, StyleSheet} from 'enmity/metro/common'
 import {getThemeDatabase} from "../utils/fetch"
 import {set} from "enmity/api/settings"
 // @ts-ignore
-import {name} from "../../manifest.json"
+import {name as plugin_name} from "../../manifest.json"
 import {getThemes} from "../utils/addon"
 import {Search, Navigator, Icons} from "../utils/common"
 
@@ -35,7 +35,7 @@ function Themes() {
                         leading={installedThemes.includes(key) ? <FormRow.Icon source={Icons.Uninstall}/> : <FormRow.Icon source={Icons.Download}/>}
                         trailing={FormRow.Arrow}
                         onPress={() => {
-                            set(name, "_selected_theme", key)
+                            set(plugin_name, "_selected_theme", key)
                             Navigation.navigate("ThemeDetail")
                             // Navigation.push(Page, {component: Detail, name: key, detail: "plugin"})
                         }}

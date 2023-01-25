@@ -5,7 +5,7 @@ import {get} from "enmity/api/settings"
 import {installPlugin, uninstallPlugin} from "../utils/addon"
 import {getPluginDatabase} from "../utils/fetch"
 // @ts-ignore
-import {name as name_} from '../../manifest.json'
+import {name as plugin_name} from '../../manifest.json'
 
 const Settings = NavigationStack.createStackNavigator()
 
@@ -35,7 +35,7 @@ export default ({name = 'AddonManager', component = View, detail = null} = {}) =
     })
     let installed, plugin_name
     if (detail) {
-        plugin_name = get(name_, "_selected_plugin").toString()
+        plugin_name = get(plugin_name, "_selected_plugin").toString()
         installed = getPlugin(plugin_name)
     }
 

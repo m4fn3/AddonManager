@@ -4,7 +4,7 @@ import {FormRow, FormSection, FormSwitch, ScrollView} from "enmity/components"
 import {getPlugins} from "enmity/managers/plugins"
 
 // @ts-ignore
-import {name} from '../../manifest.json'
+import {name as plugin_name} from '../../manifest.json'
 import {getThemes} from "../utils/addon"
 import {Clipboard, Icons} from "../utils/common"
 
@@ -22,7 +22,7 @@ function Export() {
             backgroundColor: Constants.ThemeColorMap.BACKGROUND_PRIMARY,
         }
     })
-    const [switchVal, setSwitchVal] = React.useState(Boolean(get(name, "auto_backup"))) // 格納されている値は0,1になっているので真偽値に変換
+    const [switchVal, setSwitchVal] = React.useState(Boolean(get(plugin_name, "auto_backup"))) // 格納されている値は0,1になっているので真偽値に変換
 
 
     return (
@@ -37,7 +37,7 @@ function Export() {
                             value={switchVal}
                             onValueChange={(value) => {
                                 setSwitchVal(value)
-                                set(name, "auto_backup", value)
+                                set(plugin_name, "auto_backup", value)
                             }}
                         />
                     }

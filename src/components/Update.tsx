@@ -8,12 +8,11 @@ import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
 import {get, set} from "enmity/api/settings"
 
 // @ts-ignore
-import {name} from '../../manifest.json'
+import {name as plugin_name} from '../../manifest.json'
 import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
 import {Navigator, Icons} from "../utils/common"
 
 function Update() {
-
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -21,22 +20,27 @@ function Update() {
         }
     })
     const Navigation = Navigator.useNavigation()
+    const isFocused = Navigator.useIsFocused()
+
     const plugins = getPluginDatabase()
     const themes = getThemeDatabase()
 
     const updatablePlugins = getUpdatablePlugins(plugins)
     const updatableThemes = getUpdatableThemes(themes)
 
-    // [name, name, name...]
-    const [pluginList, setPluginList] = React.useState(updatablePlugins.length ? updatablePlugins : ["@"])
-    const [themeList, setThemeList] = React.useState(updatableThemes.length ? updatableThemes : ["@"])
-    const [switchVal, setSwitchVal] = React.useState(Boolean(get(name, "check_updates"))) // 格納されている値は0,1になっているので真偽値に変換
-    let updated_plugins = getCachedUpdated("plugin")
-    let new_plugins = Object.assign([],pluginList.map(name => !updated_plugins.include(name)))
-    setPluginList(new_plugins.length ? new_plugins : ["@"])
-    let updated_themes = getCachedUpdated("theme")
-    let new_themes = Object.assign([],themeList.map(name => !updated_themes.include(name)))
-    setThemeList(new_themes.length ? new_themes : ["@"])
+    // // [name, name, name...]
+    let [pluginList, setPluginList] = React.useState(updatablePlugins.length ? updatablePlugins : ["@"])
+    let [themeList, setThemeList] = React.useState(updatableThemes.length ? updatableThemes : ["@"])
+    const [switchVal, setSwitchVal] = React.useState(Boolean(get(plugin_name, "check_updates"))) // 格納されている値は0,1になっているので真偽値に変換
+
+    React.useEffect(() => {
+        let updated_plugins = getCachedUpdated("plugin")
+        let new_plugins = Object.assign([], pluginList.filter(name => !updated_plugins.includes(name)))
+        setPluginList(new_plugins.length ? new_plugins : ["@"])
+        let updated_themes = getCachedUpdated("theme")
+        let new_themes = Object.assign([], themeList.filter(name => !updated_themes.includes(name)))
+        setThemeList(new_themes.length ? new_themes : ["@"])
+    }, [isFocused])  // backしてきたときも更新するために
 
     return (
         <ScrollView style={styles.container}>
@@ -49,7 +53,7 @@ function Update() {
                             value={switchVal}
                             onValueChange={(value) => {
                                 setSwitchVal(value)
-                                set(name, "check_updates", value)
+                                set(plugin_name, "check_updates", value)
                             }}
                         />
                     }
@@ -66,12 +70,15 @@ function Update() {
                                 leading={<FormRow.Icon source={Icons.Download}/>}
                                 trailing={FormRow.Arrow}
                                 onPress={() => {
-                                    set(name, "_selected_plugin", name)
+                                    set(plugin_name, "_selected_plugin", name)
                                     Navigation.navigate("PluginDetail")
                                 }}
                                 onLongPress={() => {
                                     installPlugin(name, plugins[name].url, () => {
                                         addCachedUpdated("plugin", name)
+                                        let newPlugins = Object.assign([], pluginList) // そのままコピーすると再レンダリングされないので参照付きコピーではなく新規作成すること！
+                                        newPlugins.splice(newPlugins.indexOf(name), 1)
+                                        setPluginList(newPlugins.length ? newPlugins : ["@"])
                                     })
                                 }}
                             />
@@ -89,12 +96,15 @@ function Update() {
                                 leading={<FormRow.Icon source={Icons.Download}/>}
                                 trailing={FormRow.Arrow}
                                 onPress={() => {
-                                    set(name, "_selected_theme", name)
+                                    set(plugin_name, "_selected_theme", name)
                                     Navigation.navigate("ThemeDetail")
                                 }}
-                                onLongPress={()=>{
+                                onLongPress={() => {
                                     installTheme(name, themes[name].url, () => {
                                         addCachedUpdated("theme", name)
+                                        let newThemes = Object.assign([], themeList) // そのままコピーすると再レンダリングされないので参照付きコピーではなく新規作成すること！
+                                        newThemes.splice(newThemes.indexOf(name), 1)
+                                        setThemeList(newThemes.length ? newThemes : ["@"])
                                     })
                                 }}
                             />

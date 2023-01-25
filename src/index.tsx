@@ -1,16 +1,17 @@
 import {Plugin, registerPlugin} from 'enmity/managers/plugins'
-import {React} from 'enmity/metro/common'
+import {Navigation, React} from 'enmity/metro/common'
 import {create} from 'enmity/patcher'
 
 import addon from "./components/Commands"
 
 // @ts-ignore
-import manifest, {name} from '../manifest.json'
+import manifest from '../manifest.json'
 import {checkPluginDatabaseVer, checkThemeDatabaseVer} from "./utils/fetch"
 import {checkUpdate} from "./utils/update"
 import "./utils/native"
 import {HomeStack} from "./components/Home";
-import {setCachedUpdated} from "./utils/addon";
+import {resetCachedUpdated} from "./utils/addon";
+import Page from "./components/Page";
 
 const Patcher = create('AddonManager')
 
@@ -21,7 +22,13 @@ const AddonManager: Plugin = {
         this.commands = [addon]
 
         let addons = ["plugin", "theme"]
-        addons.forEach(addonType => setCachedUpdated(addonType))
+        addons.forEach(addonType => resetCachedUpdated(addonType))
+
+        // TODO: TEST
+        setTimeout(
+            () => Navigation.push(Page, {component: HomeStack, name: "AddonManager"})
+            , 300
+        )
 
         checkPluginDatabaseVer()
         checkThemeDatabaseVer()

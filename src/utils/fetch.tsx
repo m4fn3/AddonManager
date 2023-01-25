@@ -1,7 +1,7 @@
 import {REST} from 'enmity/metro/common'
 import {get, set} from 'enmity/api/settings'
 // @ts-ignore
-import {name} from '../../manifest.json'
+import {name as plugin_name} from '../../manifest.json'
 
 // const rawURL = "http://192.168.11.9:8000/" // Test
 const rawURL = "https://raw.githubusercontent.com/m4fn3/AddonManagerDatabase/master/"
@@ -15,36 +15,36 @@ function randomizeURL(url) {
 }
 
 function getPluginDatabase() {
-    return JSON.parse(get(name, "plugins", "{}").toString())
+    return JSON.parse(get(plugin_name, "plugins", "{}").toString())
 }
 
 function getThemeDatabase() {
-    return JSON.parse(get(name, "themes", "{}").toString())
+    return JSON.parse(get(plugin_name, "themes", "{}").toString())
 }
 
 function fetchPluginDatabase() {
     REST.get(randomizeURL(pluginDatabaseURL)).then(databaseRaw => {
-        set(name, "plugins", databaseRaw.text)
+        set(plugin_name, "plugins", databaseRaw.text)
     })
 }
 
 function fetchThemeDatabase() {
     REST.get(randomizeURL(themeDatabaseURL)).then(databaseRaw => {
-        set(name, "themes", databaseRaw.text)
+        set(plugin_name, "themes", databaseRaw.text)
     })
 }
 
 function checkPluginDatabaseVer() {
     REST.get(randomizeURL(pluginDatabaseVerURL)).then(verRaw => {
         let ver = verRaw.text
-        let plugins_ver = get(name, "plugins_ver")
+        let plugins_ver = get(plugin_name, "plugins_ver")
         if (plugins_ver) {
             if (plugins_ver != ver) { // 更新がある場合
-                set(name, "plugins_ver", ver)
+                set(plugin_name, "plugins_ver", ver)
                 fetchPluginDatabase()
             }
         } else {  // 初回
-            set(name, "plugins_ver", ver)
+            set(plugin_name, "plugins_ver", ver)
             fetchPluginDatabase()
         }
     })
@@ -53,14 +53,14 @@ function checkPluginDatabaseVer() {
 function checkThemeDatabaseVer() {
     REST.get(randomizeURL(themeDatabaseVerURL)).then(verRaw => {
         let ver = verRaw.text
-        let themes_ver = get(name, "themes_ver")
+        let themes_ver = get(plugin_name, "themes_ver")
         if (themes_ver) {
             if (themes_ver != ver) { // 更新がある場合
-                set(name, "themes_ver", ver)
+                set(plugin_name, "themes_ver", ver)
                 fetchThemeDatabase()
             }
         } else {
-            set(name, "themes_ver", ver)
+            set(plugin_name, "themes_ver", ver)
             fetchThemeDatabase()
         }
     })
