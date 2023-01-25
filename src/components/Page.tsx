@@ -39,7 +39,7 @@ export default ({name = 'AddonManager', component = View, detail = null} = {}) =
         installed = getPlugin(plugin_name)
     }
 
-    return <NavigationNative.NavigationContainer>
+    return <NavigationNative.NavigationContainer independent={true}>
         <Settings.Navigator
             initialRouteName={name}
             style={styles.container}
