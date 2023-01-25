@@ -21,7 +21,7 @@ const AddonManager: Plugin = {
         this.commands = [addon]
 
         let addons = ["plugin", "theme"]
-        addons.forEach(addonType => setCachedUpdated(addonType, []))
+        addons.forEach(addonType => setCachedUpdated(addonType))
 
         checkPluginDatabaseVer()
         checkThemeDatabaseVer()

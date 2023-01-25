@@ -86,9 +86,13 @@ function addCachedUpdated(addonType, name) {
     set(name, `_updated_${addonType}s`, JSON.stringify(updated))
 }
 
+function setCachedUpdated(addonType){
+    set(name, `_updated_${addonType}s`, "{}")
+}
+
 function getCachedUpdated(addonType) {
     return JSON.parse(get(name, `_updated_${addonType}s`, "{}").toString())
 }
 
 
-export {installPlugin, installTheme, getTheme, getThemes, uninstallPlugin, uninstallTheme, getThemeColors, getCachedUpdated, addCachedUpdated}
+export {installPlugin, installTheme, getTheme, getThemes, uninstallPlugin, uninstallTheme, getThemeColors, getCachedUpdated, addCachedUpdated, setCachedUpdated}
