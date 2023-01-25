@@ -6,7 +6,7 @@ import {get} from "enmity/api/settings"
 import {getPluginDatabase, getThemeDatabase, randomizeURL} from "../utils/fetch"
 import {PluginIcon, ThemeIcon} from "../utils/icons"
 import {getPlugin} from "enmity/managers/plugins"
-import {getCachedUpdated, getTheme, getThemeColors, installPlugin, installTheme, setCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
+import {getCachedUpdated, getTheme, getThemeColors, installPlugin, installTheme, addCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
 import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
 import {ReactNative, Video} from "../utils/common"
 
@@ -112,18 +112,14 @@ function Detail({addonType}) {
                                 if (getPlugin(addonName) && !updatable) uninstallPlugin(addonName, () => setEditText("GET"))
                                 else installPlugin(addonName, data.url, () => {
                                     setUpdatable(false)
-                                    let updated = getCachedUpdated("plugin")
-                                    updated.push(addonName)
-                                    setCachedUpdated("theme", updated)
+                                    addCachedUpdated(addonType, addonName)
                                     setEditText("REMOVE")
                                 })
                             } else {
                                 if (getTheme(addonName) && !updatable) uninstallTheme(addonName, () => setEditText("GET"))
                                 else installTheme(addonName, data.url, () => {
                                     setUpdatable(false)
-                                    let updated = getCachedUpdated("theme")
-                                    updated.push(addonName)
-                                    setCachedUpdated("theme", updated)
+                                    addCachedUpdated(addonType, addonName)
                                     setEditText("REMOVE")
                                 })
                             }

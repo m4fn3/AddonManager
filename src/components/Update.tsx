@@ -2,7 +2,7 @@ import {FormRow, ScrollView, FormSection, FormSwitch} from 'enmity/components'
 import {React, StyleSheet, Constants} from 'enmity/metro/common'
 import {getIDByName} from "enmity/api/assets"
 
-import {installPlugin, installTheme, getTheme, getCachedUpdated, setCachedUpdated} from "../utils/addon"
+import {installPlugin, installTheme, getTheme, getCachedUpdated, addCachedUpdated} from "../utils/addon"
 import {getPlugin} from "enmity/managers/plugins"
 import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
 import {get, set} from "enmity/api/settings"
@@ -71,9 +71,7 @@ function Update() {
                                 }}
                                 onLongPress={() => {
                                     installPlugin(name, plugins[name].url, () => {
-                                        let updated = getCachedUpdated("plugin")
-                                        updated.push(name)
-                                        setCachedUpdated("plugin", updated)
+                                        addCachedUpdated("plugin", name)
                                     })
                                 }}
                             />
@@ -96,9 +94,7 @@ function Update() {
                                 }}
                                 onLongPress={()=>{
                                     installTheme(name, themes[name].url, () => {
-                                        let updated = getCachedUpdated("theme")
-                                        updated.push(name)
-                                        setCachedUpdated("theme", updated)
+                                        addCachedUpdated("theme", name)
                                     })
                                 }}
                             />

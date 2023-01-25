@@ -1,6 +1,5 @@
 import {FormRow, ScrollView} from 'enmity/components'
 import {Constants, React, StyleSheet} from 'enmity/metro/common'
-import {getByName} from 'enmity/metro'
 import {set} from "enmity/api/settings"
 
 import {installPlugin, uninstallPlugin} from "../utils/addon"

@@ -1,9 +1,6 @@
 import {FormRow, ScrollView} from 'enmity/components'
 import {Constants, React, StyleSheet} from 'enmity/metro/common'
-import {getByName} from 'enmity/metro'
-import {getIDByName} from "enmity/api/assets"
 import {getThemeDatabase} from "../utils/fetch"
-import {getByKeyword} from "enmity/modules"
 import {set} from "enmity/api/settings"
 // @ts-ignore
 import {name} from "../../manifest.json"

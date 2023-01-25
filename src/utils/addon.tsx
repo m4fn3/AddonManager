@@ -80,7 +80,9 @@ function getThemeColors(tag) {
     }
 }
 
-function setCachedUpdated(addonType, updated) {
+function addCachedUpdated(addonType, name) {
+    let updated = getCachedUpdated("plugin")
+    updated.push(name)
     set(name, `_updated_${addonType}s`, JSON.stringify(updated))
 }
 
@@ -89,4 +91,4 @@ function getCachedUpdated(addonType) {
 }
 
 
-export {installPlugin, installTheme, getTheme, getThemes, uninstallPlugin, uninstallTheme, getThemeColors, getCachedUpdated, setCachedUpdated}
+export {installPlugin, installTheme, getTheme, getThemes, uninstallPlugin, uninstallTheme, getThemeColors, getCachedUpdated, addCachedUpdated}
