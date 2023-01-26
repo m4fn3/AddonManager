@@ -1,6 +1,5 @@
 import {Toasts} from "enmity/metro/common"
-import {getIDByName} from "enmity/api/assets"
-import {get, set} from "enmity/api/settings";
+import {get, set} from "enmity/api/settings"
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
 import {Icons} from "./common"

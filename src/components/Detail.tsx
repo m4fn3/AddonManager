@@ -9,7 +9,7 @@ import {getPlugin} from "enmity/managers/plugins"
 import {getTheme, getThemeColors, installPlugin, installTheme, addCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
 import {compare, getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
 import {Clipboard, filterColor, Icons, ReactNative, Video} from "../utils/common"
-import {version} from "enmity/api/native";
+import {version} from "enmity/api/native"
 
 function Detail({addonType}) {
     let editTextBgColor = getThemeColors("PRIMARY_DARK_500")  // -> "#..." テーマに存在しない場合はデフォルトに変更(undefined)

@@ -13,8 +13,8 @@ import {Export} from "./Export";
 import {screenOptions} from "../utils/common"
 import {Detail} from "./Detail"
 import {Icons, Invites, Navigator} from "../utils/common"
-import {compatibilityURL, randomizeURL} from "../utils/fetch";
-import {set} from "enmity/api/settings";
+import {compatibilityURL, randomizeURL} from "../utils/fetch"
+import {set} from "enmity/api/settings"
 
 
 const Stack = NavigationStack.createStackNavigator()
