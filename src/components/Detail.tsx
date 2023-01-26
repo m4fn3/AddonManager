@@ -8,11 +8,12 @@ import {PluginIcon, ThemeIcon} from "../utils/icons"
 import {getPlugin} from "enmity/managers/plugins"
 import {getTheme, getThemeColors, installPlugin, installTheme, addCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
 import {compare, getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
-import {Clipboard, Icons, ReactNative, Video} from "../utils/common"
+import {Clipboard, filterColor, Icons, ReactNative, Video} from "../utils/common"
 import {version} from "enmity/api/native";
 
 function Detail({addonType}) {
     let bgColor = getThemeColors("PRIMARY_DARK_500")
+    bgColor = bgColor ? bgColor : Constants.ThemeColorMap.BACKGROUND_SECONDARY
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -24,41 +25,41 @@ function Detail({addonType}) {
             justifyContent: 'center'
         },
         addonName: {
-            color: Constants.ThemeColorMap.HEADER_PRIMARY,
+            color: Constants.ThemeColorMap.TEXT_NORMAL,
             fontFamily: Constants.Fonts.PRIMARY_SEMIBOLD,
             fontSize: 20
         },
-        addonTitle: {
+        addonText: {
             borderBottomWidth: 1,
-            borderBottomColor: Constants.ThemeColorMap.HEADER_SECONDARY,
+            borderBottomColor: Constants.ThemeColorMap.HEADER_PRIMARY,
             paddingBottom: 20
         },
         sectionTitle: {
             marginTop: 20,
-            marginLeft: 20,
-            color: Constants.ThemeColorMap.HEADER_SECONDARY,
+            marginLeft: 15,
+            color: Constants.ThemeColorMap.HEADER_PRIMARY,
         },
         sectionContent: {
             margin: 10,
             borderRadius: 10,
             borderWidth: 1,
-            borderColor: Constants.ThemeColorMap.HEADER_SECONDARY,
-            color: Constants.ThemeColorMap.HEADER_PRIMARY,
+            borderColor: Constants.ThemeColorMap.HEADER_PRIMARY,
+            color: Constants.ThemeColorMap.TEXT_NORMAL,
             padding: 10
         },
         addonEdit: {
-            backgroundColor: bgColor ? bgColor : Constants.ThemeColorMap.BACKGROUND_SECONDARY,
+            backgroundColor: bgColor,
             paddingTop: 10,
             paddingBottom: 10,
             borderRadius: 20,
             borderWidth: 1,
             width: 80,
             alignItems: 'center',
-            borderColor: bgColor ? bgColor : Constants.ThemeColorMap.BACKGROUND_SECONDARY,
+            borderColor: bgColor,
             overflow: "hidden"
         },
         addonEditText: {
-            color: Constants.ThemeColorMap.HEADER_PRIMARY,
+            color: filterColor(bgColor, Constants.ThemeColorMap.TEXT_NORMAL[0], Constants.ThemeColorMap.TEXT_NORMAL[1]),
             fontFamily: Constants.Fonts.PRIMARY_SEMIBOLD
         },
         hyperLink: {
@@ -66,7 +67,6 @@ function Detail({addonType}) {
         }
     })
 
-    // https://justacoding.blog/how-to-make-part-of-the-text-bold-in-react-native/
     const screen_width = ReactNative.useWindowDimensions().width
     const [description, setDescription] = React.useState(["Loading description..."])
     const [previews, setPreviews] = React.useState([])
@@ -148,7 +148,7 @@ function Detail({addonType}) {
             {
                 [1].filter(_ => Boolean(notice)).map(_ => (
                     <>
-                        <Text style={[styles.sectionTitle, {color: "#e74c3c"}]}>Notice</Text>
+                        <Text style={[styles.sectionTitle, {color: "#e74c3c", fontFamily: Constants.Fonts.PRIMARY_SEMIBOLD}]}>Notice</Text>
                         <Text style={[styles.sectionContent, {borderColor: "#e74c3c"}]}>{notice}</Text>
                     </>
                 ))

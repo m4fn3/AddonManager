@@ -57,4 +57,19 @@ const screenOptions = {
     },
 }
 
-export {screenOptions, Icons, Navigator, Search, Invites, ReactNative, Video, Clipboard}
+
+// func
+function filterColor(color, light, dark, boundary = 186){
+    let baseColor = color.replace("#", "")
+    const parseColorAsInt = (color, digits, base) => parseInt(color.substring(digits[0], digits[1]), base)
+    const red = parseColorAsInt(baseColor, [0, 2], 16),
+        green = parseColorAsInt(baseColor, [2, 4], 16),
+        blue = parseColorAsInt(baseColor, [4, 6], 16)
+
+    return (((red + green + blue) / (255 * 3)) > boundary)
+        ? dark
+        : light
+}
+
+
+export {screenOptions, Icons, Navigator, Search, Invites, ReactNative, Video, Clipboard, filterColor}
