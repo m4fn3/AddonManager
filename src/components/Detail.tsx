@@ -12,8 +12,9 @@ import {Clipboard, filterColor, Icons, ReactNative, Video} from "../utils/common
 import {version} from "enmity/api/native";
 
 function Detail({addonType}) {
-    let bgColor = getThemeColors("PRIMARY_DARK_500")
-    bgColor = bgColor ? bgColor : Constants.ThemeColorMap.BACKGROUND_SECONDARY
+    let editTextBgColor = getThemeColors("PRIMARY_DARK_500")  // -> "#..." テーマに存在しない場合はデフォルトに変更(undefined)
+    let editTextColor = editTextBgColor ? filterColor(editTextBgColor, Constants.ThemeColorMap.TEXT_NORMAL[0], Constants.ThemeColorMap.TEXT_NORMAL[1])  : Constants.ThemeColorMap.HEADER_PRIMARY
+    editTextBgColor = editTextBgColor ? editTextBgColor : Constants.ThemeColorMap.BACKGROUND_SECONDARY
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -48,18 +49,18 @@ function Detail({addonType}) {
             padding: 10
         },
         addonEdit: {
-            backgroundColor: bgColor,
+            backgroundColor: editTextBgColor,
             paddingTop: 10,
             paddingBottom: 10,
             borderRadius: 20,
             borderWidth: 1,
             width: 80,
             alignItems: 'center',
-            borderColor: bgColor,
+            borderColor: editTextBgColor,
             overflow: "hidden"
         },
         addonEditText: {
-            color: filterColor(bgColor, Constants.ThemeColorMap.TEXT_NORMAL[0], Constants.ThemeColorMap.TEXT_NORMAL[1]),
+            color: editTextColor,
             fontFamily: Constants.Fonts.PRIMARY_SEMIBOLD
         },
         hyperLink: {

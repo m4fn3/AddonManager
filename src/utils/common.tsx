@@ -60,6 +60,8 @@ const screenOptions = {
 
 // func
 function filterColor(color, light, dark, boundary = 186){
+    // Chooses whether the color should be Dark or Light depending on the background color of the element.
+    // by Rosie (@acquitelol)
     let baseColor = color.replace("#", "")
     const parseColorAsInt = (color, digits, base) => parseInt(color.substring(digits[0], digits[1]), base)
     const red = parseColorAsInt(baseColor, [0, 2], 16),
