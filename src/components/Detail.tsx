@@ -107,12 +107,16 @@ function Detail({addonType}) {
         // 互換性
         const compat = getCompatibility()
         if (addonName in compat[addonType]) {
-            let vers = compat[addonType][addonName].ver.split("~")
-            let min_ = vers[0] ? vers[0] : "0.0"
-            let max_ = vers[1] ? vers[1] : "999.0"
-            if (!(compare(min_, version) >= 0 && compare(version, max_) >= 0)) { // not min <= version <= max
-                setNotice(compat[addonType][addonName].text + `\n\nCompatibility: ${compat[addonType][addonName].ver} ( currently on ${version})`)
+            let flag = true // バージョンテキスト出ない場合は常に表示
+            if (compat[addonType][addonName].ver.include("~")){
+                let vers = compat[addonType][addonName].ver.split("~")
+                let min_ = vers[0] ? vers[0] : "0.0"
+                let max_ = vers[1] ? vers[1] : "999.0"
+                if (compare(min_, version) >= 0 && compare(version, max_) >= 0) { //min <= version <= max
+                    flag = false  // 対応バージョンの確認
+                }
             }
+            if (flag) setNotice(compat[addonType][addonName].text + `\n\nCompatibility: ${compat[addonType][addonName].ver} ( currently on ${version})`)
         }
     }, [])
 
