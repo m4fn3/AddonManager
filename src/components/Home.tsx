@@ -61,7 +61,7 @@ function HomeStack() {
     )
 }
 
-function Home() {
+function Home({settings}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             backgroundColor: Constants.ThemeColorMap.BACKGROUND_PRIMARY,
@@ -133,7 +133,15 @@ function Home() {
                     leading={<PluginIcon width={24} height={24}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.navigate("Plugins")
+                        if (settings) {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
+                                pageName: `Plugins`,
+                                pagePanel: () => <Plugins isSetting={true}/>
+                            })
+                        } else {
+                            Navigation.navigate("Plugins")
+                        }
                     }}
                 />
                 <FormRow
@@ -141,7 +149,15 @@ function Home() {
                     leading={<ThemeIcon width={24} height={24}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.navigate("Themes")
+                        if (settings) {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
+                                pageName: `Themes`,
+                                pagePanel: () => <Themes isSetting={true}/>
+                            })
+                        } else {
+                            Navigation.navigate("Themes")
+                        }
                     }}
                 />
                 <FormRow
@@ -149,7 +165,15 @@ function Home() {
                     leading={<FormRow.Icon source={Icons.Export}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.navigate("Export")
+                        if (settings) {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
+                                pageName: `Export`,
+                                pagePanel: Export
+                            })
+                        } else {
+                            Navigation.navigate("Export")
+                        }
                     }}
                 />
                 <FormRow
@@ -157,7 +181,15 @@ function Home() {
                     leading={<FormRow.Icon source={Icons.Import}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.navigate("Import")
+                        if (settings) {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
+                                pageName: `Import`,
+                                pagePanel: Import
+                            })
+                        } else {
+                            Navigation.navigate("Import")
+                        }
                     }}
                 />
                 <FormRow
@@ -165,7 +197,15 @@ function Home() {
                     leading={<FormRow.Icon source={Icons.Update}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        Navigation.navigate("Update")
+                        if (settings) {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
+                                pageName: `Update`,
+                                pagePanel: () => <Update isSetting={true}/>
+                            })
+                        } else {
+                            Navigation.navigate("Update")
+                        }
                     }}
                 />
             </FormSection>
@@ -211,4 +251,4 @@ function Home() {
     )
 }
 
-export {HomeStack}
+export {HomeStack, Home}

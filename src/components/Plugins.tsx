@@ -8,8 +8,9 @@ import {getPluginDatabase} from "../utils/fetch"
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
 import {Search, Navigator, Icons} from "../utils/common"
+import {Detail} from "./Detail"
 
-function Plugins() {
+function Plugins({isSetting = false}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -38,8 +39,15 @@ function Plugins() {
                         trailing={FormRow.Arrow}
                         onPress={() => {
                             set(plugin_name, "_selected_plugin", key)
-                            Navigation.navigate("PluginDetail")
-                            // Navigation.push(Page, {component: Detail, name: key, detail: "plugin"})
+                            if (isSetting) {
+                                Navigation.push("EnmityCustomPage", {
+                                    Navigation,
+                                    pageName: " ",
+                                    pagePanel: () => <Detail addonType="plugin"/>
+                                })
+                            } else {
+                                Navigation.navigate("PluginDetail")
+                            }
                         }}
                         onLongPress={() => {
                             if (installedPlugins.includes(key)) {

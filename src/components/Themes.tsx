@@ -6,9 +6,10 @@ import {set} from "enmity/api/settings"
 import {name as plugin_name} from "../../manifest.json"
 import {getThemes} from "../utils/addon"
 import {Search, Navigator, Icons} from "../utils/common"
+import {Detail} from "./Detail";
 
 
-function Themes() {
+function Themes({isSetting=false}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -36,8 +37,15 @@ function Themes() {
                         trailing={FormRow.Arrow}
                         onPress={() => {
                             set(plugin_name, "_selected_theme", key)
-                            Navigation.navigate("ThemeDetail")
-                            // Navigation.push(Page, {component: Detail, name: key, detail: "plugin"})
+                            if (isSetting) {
+                                Navigation.push("EnmityCustomPage", {
+                                    Navigation,
+                                    pageName: " ",
+                                    pagePanel: () => <Detail addonType="theme"/>
+                                })
+                            } else {
+                                Navigation.navigate("ThemeDetail")
+                            }
                         }}
                     />
                 )}

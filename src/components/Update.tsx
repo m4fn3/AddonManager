@@ -10,8 +10,10 @@ import {get, set} from "enmity/api/settings"
 import {name as plugin_name} from '../../manifest.json'
 import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
 import {Navigator, Icons} from "../utils/common"
+import {Detail} from "./Detail";
 
-function Update() {
+
+function Update({isSetting}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -40,6 +42,7 @@ function Update() {
         let new_themes = Object.assign([], themeList.filter(name => !updated_themes.includes(name)))
         setThemeList(new_themes.length ? new_themes : ["@"])
     }, [isFocused])  // backしてきたときも更新するために
+
 
     return (
         <ScrollView style={styles.container}>
@@ -70,7 +73,15 @@ function Update() {
                                 trailing={FormRow.Arrow}
                                 onPress={() => {
                                     set(plugin_name, "_selected_plugin", name)
-                                    Navigation.navigate("PluginDetail")
+                                    if (isSetting) {
+                                        Navigation.push("EnmityCustomPage", {
+                                            Navigation,
+                                            pageName: " ",
+                                            pagePanel: () => <Detail addonType="plugin"/>
+                                        })
+                                    } else {
+                                        Navigation.navigate("PluginDetail")
+                                    }
                                 }}
                                 onLongPress={() => {
                                     installPlugin(name, plugins[name].url, () => {
@@ -96,7 +107,15 @@ function Update() {
                                 trailing={FormRow.Arrow}
                                 onPress={() => {
                                     set(plugin_name, "_selected_theme", name)
-                                    Navigation.navigate("ThemeDetail")
+                                    if (isSetting) {
+                                        Navigation.push("EnmityCustomPage", {
+                                            Navigation,
+                                            pageName: " ",
+                                            pagePanel: () => <Detail addonType="theme"/>
+                                        })
+                                    } else {
+                                        Navigation.navigate("ThemeDetail")
+                                    }
                                 }}
                                 onLongPress={() => {
                                     installTheme(name, themes[name].url, () => {

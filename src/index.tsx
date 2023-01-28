@@ -9,7 +9,7 @@ import manifest from '../manifest.json'
 import {checkPluginDatabaseVer, checkThemeDatabaseVer} from "./utils/fetch"
 import {checkUpdate} from "./utils/update"
 import "./utils/native"
-import {HomeStack} from "./components/Home"
+import {Home} from "./components/Home"
 import {resetCachedUpdated} from "./utils/addon"
 
 const Patcher = create('AddonManager')
@@ -31,7 +31,7 @@ const AddonManager: Plugin = {
         Patcher.unpatchAll()
     },
     getSettingsPanel({settings}) {
-        return <HomeStack/>
+        return <Home settings={settings}/>
     }
 }
 
