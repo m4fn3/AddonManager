@@ -10,7 +10,7 @@ import {name as plugin_name} from '../../manifest.json'
 import {Search, Navigator, Icons} from "../utils/common"
 import {Detail} from "./Detail"
 
-function Plugins({isSetting = false}) {
+function Plugins({isSetting = false, renderPage = null}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -40,8 +40,12 @@ function Plugins({isSetting = false}) {
                         onPress={() => {
                             set(plugin_name, "_selected_plugin", key)
                             if (isSetting) {
-                                Navigation.push("EnmityCustomPage", {
-                                    Navigation,
+                                // Navigation.push("EnmityCustomPage", {
+                                //     Navigation,
+                                //     pageName: " ",
+                                //     pagePanel: () => <Detail addonType="plugin"/>
+                                // })
+                                renderPage(Navigation, {
                                     pageName: " ",
                                     pagePanel: () => <Detail addonType="plugin"/>
                                 })

@@ -61,7 +61,7 @@ function HomeStack() {
     )
 }
 
-function Home({settings}) {
+function Home({settings, renderPage}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             backgroundColor: Constants.ThemeColorMap.BACKGROUND_PRIMARY,
@@ -134,10 +134,14 @@ function Home({settings}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            Navigation.push("EnmityCustomPage", {
-                                Navigation,
+                            // Navigation.push("EnmityCustomPage", {
+                            //     Navigation,
+                            //     pageName: `Plugins`,
+                            //     pagePanel: () => <Plugins isSetting={true}/>
+                            // })
+                            renderPage(Navigation, {
                                 pageName: `Plugins`,
-                                pagePanel: () => <Plugins isSetting={true}/>
+                                pagePanel: () => <Plugins isSetting={true} renderPage={renderPage}/>
                             })
                         } else {
                             Navigation.navigate("Plugins")
@@ -150,10 +154,14 @@ function Home({settings}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            Navigation.push("EnmityCustomPage", {
-                                Navigation,
+                            // Navigation.push("EnmityCustomPage", {
+                            //     Navigation,
+                            //     pageName: `Themes`,
+                            //     pagePanel: () => <Themes isSetting={true}/>
+                            // })
+                            renderPage(Navigation, {
                                 pageName: `Themes`,
-                                pagePanel: () => <Themes isSetting={true}/>
+                                pagePanel: () => <Themes isSetting={true} renderPage={renderPage}/>
                             })
                         } else {
                             Navigation.navigate("Themes")
@@ -166,8 +174,12 @@ function Home({settings}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            Navigation.push("EnmityCustomPage", {
-                                Navigation,
+                            // Navigation.push("EnmityCustomPage", {
+                            //     Navigation,
+                            //     pageName: `Export`,
+                            //     pagePanel: Export
+                            // })
+                            renderPage(Navigation, {
                                 pageName: `Export`,
                                 pagePanel: Export
                             })
@@ -182,8 +194,12 @@ function Home({settings}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            Navigation.push("EnmityCustomPage", {
-                                Navigation,
+                            // Navigation.push("EnmityCustomPage", {
+                            //     Navigation,
+                            //     pageName: `Import`,
+                            //     pagePanel: Import
+                            // })
+                            renderPage(Navigation, {
                                 pageName: `Import`,
                                 pagePanel: Import
                             })
@@ -198,10 +214,14 @@ function Home({settings}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            Navigation.push("EnmityCustomPage", {
-                                Navigation,
+                            // Navigation.push("EnmityCustomPage", {
+                            //     Navigation,
+                            //     pageName: `Update`,
+                            //     pagePanel: () => <Update isSetting={true}/>
+                            // })
+                            renderPage(Navigation, {
                                 pageName: `Update`,
-                                pagePanel: () => <Update isSetting={true}/>
+                                pagePanel: () => <Update isSetting={true} renderPage={renderPage}/>
                             })
                         } else {
                             Navigation.navigate("Update")

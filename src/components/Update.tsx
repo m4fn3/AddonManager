@@ -13,7 +13,7 @@ import {Navigator, Icons} from "../utils/common"
 import {Detail} from "./Detail";
 
 
-function Update({isSetting}) {
+function Update({isSetting=false, renderPage = null}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -74,8 +74,12 @@ function Update({isSetting}) {
                                 onPress={() => {
                                     set(plugin_name, "_selected_plugin", name)
                                     if (isSetting) {
-                                        Navigation.push("EnmityCustomPage", {
-                                            Navigation,
+                                        // Navigation.push("EnmityCustomPage", {
+                                        //     Navigation,
+                                        //     pageName: " ",
+                                        //     pagePanel: () => <Detail addonType="plugin"/>
+                                        // })
+                                        renderPage(Navigation, {
                                             pageName: " ",
                                             pagePanel: () => <Detail addonType="plugin"/>
                                         })
@@ -108,8 +112,12 @@ function Update({isSetting}) {
                                 onPress={() => {
                                     set(plugin_name, "_selected_theme", name)
                                     if (isSetting) {
-                                        Navigation.push("EnmityCustomPage", {
-                                            Navigation,
+                                        // Navigation.push("EnmityCustomPage", {
+                                        //     Navigation,
+                                        //     pageName: " ",
+                                        //     pagePanel: () => <Detail addonType="theme"/>
+                                        // })
+                                        renderPage(Navigation, {
                                             pageName: " ",
                                             pagePanel: () => <Detail addonType="theme"/>
                                         })

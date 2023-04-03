@@ -9,7 +9,7 @@ import {Search, Navigator, Icons} from "../utils/common"
 import {Detail} from "./Detail";
 
 
-function Themes({isSetting=false}) {
+function Themes({isSetting=false, renderPage = null}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -38,8 +38,12 @@ function Themes({isSetting=false}) {
                         onPress={() => {
                             set(plugin_name, "_selected_theme", key)
                             if (isSetting) {
-                                Navigation.push("EnmityCustomPage", {
-                                    Navigation,
+                                // Navigation.push("EnmityCustomPage", {
+                                //     Navigation,
+                                //     pageName: " ",
+                                //     pagePanel: () => <Detail addonType="theme"/>
+                                // })
+                                renderPage(Navigation, {
                                     pageName: " ",
                                     pagePanel: () => <Detail addonType="theme"/>
                                 })

@@ -1,5 +1,5 @@
-import {Plugin, registerPlugin} from 'enmity/managers/plugins'
-import {Navigation, React} from 'enmity/metro/common'
+import {registerPlugin} from 'enmity/managers/plugins'
+import {React} from 'enmity/metro/common'
 import {create} from 'enmity/patcher'
 
 import addon from "./components/Commands"
@@ -14,7 +14,7 @@ import {resetCachedUpdated} from "./utils/addon"
 
 const Patcher = create('AddonManager')
 
-const AddonManager: Plugin = {
+const AddonManager = {
     ...manifest,
 
     onStart() {
@@ -30,8 +30,14 @@ const AddonManager: Plugin = {
     onStop() {
         Patcher.unpatchAll()
     },
+    renderPage(navigation, { pageName, pagePanel }) {
+        return navigation?.push?.("EnmityCustomPage", {
+            pageName,
+            pagePanel
+        })
+    },
     getSettingsPanel({settings}) {
-        return <Home settings={settings}/>
+        return <Home settings={settings} renderPage={AddonManager.renderPage} />
     }
 }
 
