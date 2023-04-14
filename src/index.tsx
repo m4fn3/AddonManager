@@ -2,8 +2,6 @@ import {registerPlugin} from 'enmity/managers/plugins'
 import {React} from 'enmity/metro/common'
 import {create} from 'enmity/patcher'
 
-import addon from "./components/Commands"
-
 // @ts-ignore
 import manifest from '../manifest.json'
 import {checkPluginDatabaseVer, checkThemeDatabaseVer} from "./utils/fetch"
@@ -11,6 +9,7 @@ import {checkUpdate} from "./utils/update"
 import "./utils/native"
 import {Home} from "./components/Home"
 import {resetCachedUpdated} from "./utils/addon"
+import addon from "./components/Commands"
 
 const Patcher = create('AddonManager')
 

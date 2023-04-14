@@ -6,7 +6,7 @@ import {set} from "enmity/api/settings"
 import {name as plugin_name} from "../../manifest.json"
 import {getThemes} from "../utils/addon"
 import {Search, Navigator, Icons} from "../utils/common"
-import {Detail} from "./Detail";
+import {Detail} from "./Detail"
 
 
 function Themes({isSetting=false, renderPage = null}) {

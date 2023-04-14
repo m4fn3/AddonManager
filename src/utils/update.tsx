@@ -1,11 +1,11 @@
 import {get, set} from "enmity/api/settings"
+import {getPlugin, getPlugins} from "enmity/managers/plugins"
+import {Toasts} from "enmity/metro/common"
 
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
 import {getPluginDatabase, getThemeDatabase} from "./fetch"
-import {getPlugin, getPlugins} from "enmity/managers/plugins"
 import {getTheme, getThemes} from "./addon"
-import {Toasts} from "enmity/metro/common"
 import {Icons} from "./common"
 
 function checkUpdate() {

@@ -1,14 +1,13 @@
 import {FormRow, ScrollView} from 'enmity/components'
 import {Constants, React, StyleSheet} from 'enmity/metro/common'
 import {set} from "enmity/api/settings"
-
-import {installPlugin, uninstallPlugin} from "../utils/addon"
 import {getPlugins} from "enmity/managers/plugins"
-import {getPluginDatabase} from "../utils/fetch"
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
 import {Search, Navigator, Icons} from "../utils/common"
 import {Detail} from "./Detail"
+import {getPluginDatabase} from "../utils/fetch"
+import {installPlugin, uninstallPlugin} from "../utils/addon"
 
 function Plugins({isSetting = false, renderPage = null}) {
     const styles = StyleSheet.createThemedStyleSheet({

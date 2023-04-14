@@ -1,36 +1,34 @@
-import {React, Navigation, NavigationNative, NavigationStack, StyleSheet, ColorMap} from 'enmity/metro/common'
+import {React, Navigation, NavigationNative, NavigationStack, Constants, StyleSheet} from 'enmity/metro/common'
 import {Button, View} from 'enmity/components'
 import {getPlugin} from "enmity/managers/plugins"
 import {get} from "enmity/api/settings"
-import {installPlugin, uninstallPlugin} from "../utils/addon"
-import {getPluginDatabase} from "../utils/fetch"
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
+import {installPlugin, uninstallPlugin} from "../utils/addon"
+import {getPluginDatabase} from "../utils/fetch"
 
 const Settings = NavigationStack.createStackNavigator()
-
-const {ThemeColorMap} = ColorMap
 
 export default ({name = 'AddonManager', component = View, detail = null} = {}) => {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
-            backgroundColor: ThemeColorMap.BACKGROUND_MOBILE_SECONDARY,
+            backgroundColor: Constants.ThemeColorMap.BACKGROUND_MOBILE_SECONDARY,
             flex: 1,
         },
         cardStyle: {
-            backgroundColor: ThemeColorMap.BACKGROUND_MOBILE_PRIMARY,
-            color: ThemeColorMap.TEXT_NORMAL
+            backgroundColor: Constants.ThemeColorMap.BACKGROUND_MOBILE_PRIMARY,
+            color: Constants.ThemeColorMap.TEXT_NORMAL
         },
         header: {
-            backgroundColor: ThemeColorMap.BACKGROUND_MOBILE_SECONDARY,
+            backgroundColor: Constants.ThemeColorMap.BACKGROUND_MOBILE_SECONDARY,
             shadowColor: 'transparent',
             elevation: 0,
         },
         headerText: {
-            color: ThemeColorMap.HEADER_PRIMARY,
+            color: Constants.ThemeColorMap.HEADER_PRIMARY,
         },
         headerButton: {
-            color: ThemeColorMap.HEADER_PRIMARY
+            color: Constants.ThemeColorMap.HEADER_PRIMARY
         }
     })
     let installed, plugin_name

@@ -1,8 +1,8 @@
 import {FormRow, ScrollView, FormSection, TextInput} from 'enmity/components'
-import {React, StyleSheet, Constants, Toasts} from 'enmity/metro/common'
+import {React,Constants, Toasts, StyleSheet} from 'enmity/metro/common'
+import {getPlugins} from "enmity/managers/plugins"
 
 import {getThemes, installPlugin, installTheme} from "../utils/addon"
-import {getPlugins} from "enmity/managers/plugins"
 import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
 import {fetchNote} from "../utils/note"
 import {Icons} from "../utils/common"

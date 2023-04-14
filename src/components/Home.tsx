@@ -1,6 +1,7 @@
 import {View, FormSection, FormRow, Image, Text, ScrollView} from "enmity/components"
 import {Constants, NavigationStack, React, REST, StyleSheet} from "enmity/metro/common"
 import {Linking} from "enmity/metro/common"
+import {set} from "enmity/api/settings"
 
 // @ts-ignore
 import {name as plugin_name, name, version} from '../../manifest.json'
@@ -14,7 +15,6 @@ import {screenOptions} from "../utils/common"
 import {Detail} from "./Detail"
 import {Icons, Invites, Navigator} from "../utils/common"
 import {compatibilityURL, randomizeURL} from "../utils/fetch"
-import {set} from "enmity/api/settings"
 
 
 const Stack = NavigationStack.createStackNavigator()

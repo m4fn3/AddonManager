@@ -1,8 +1,8 @@
 import {Command, ApplicationCommandType} from "enmity/api/commands"
 import {Navigation} from "enmity/metro/common"
 
-import Page from "./Page";
-import {HomeStack} from "./Home";
+import Page from "./Page"
+import {HomeStack} from "./Home"
 
 const addon: Command = {
     id: "addon",

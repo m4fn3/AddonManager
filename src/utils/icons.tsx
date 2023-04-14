@@ -1,12 +1,11 @@
 // from https://github.com/enmity-mod/enmity/tree/main/src/core/screens/partials
 
-import { SVG, StyleSheet, ColorMap, React } from 'enmity/metro/common'
-const { ThemeColorMap } = ColorMap
+import { SVG, StyleSheet,Constants, React } from 'enmity/metro/common'
 
 export function PluginIcon({ height, width, ...rest }) {
   const styles = StyleSheet.createThemedStyleSheet({
     icon: {
-      color: ThemeColorMap.INTERACTIVE_NORMAL,
+      color: Constants.ThemeColorMap.INTERACTIVE_NORMAL,
       opacity: 0.75,
       marginLeft: 0.5
     }
@@ -22,7 +21,7 @@ export function PluginIcon({ height, width, ...rest }) {
 export function ThemeIcon({ height, width, ...rest }) {
   const styles = StyleSheet.createThemedStyleSheet({
     icon: {
-      color: ThemeColorMap.INTERACTIVE_NORMAL,
+      color: Constants.ThemeColorMap.INTERACTIVE_NORMAL,
       opacity: 0.75,
       marginLeft: 0.5
     }

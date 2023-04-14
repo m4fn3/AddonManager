@@ -4,10 +4,10 @@
 import {Linking} from 'enmity/metro/common'
 import {get} from "enmity/api/settings"
 
-import {createExportText} from "../components/Export"
-import {setNote} from "./note"
 // @ts-ignore
 import {name as plugin_name} from "../../manifest.json"
+import {createExportText} from "../components/Export"
+import {setNote} from "./note"
 
 // @ts-ignore
 Linking.addEventListener('url', (url) => {

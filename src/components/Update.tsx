@@ -1,19 +1,18 @@
 import {FormRow, ScrollView, FormSection, FormSwitch} from 'enmity/components'
-import {React, StyleSheet, Constants} from 'enmity/metro/common'
-
-import {installPlugin, installTheme, getTheme, getCachedUpdated, addCachedUpdated} from "../utils/addon"
+import {React, Constants, StyleSheet} from 'enmity/metro/common'
 import {getPlugin} from "enmity/managers/plugins"
-import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
 import {get, set} from "enmity/api/settings"
 
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
 import {getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
 import {Navigator, Icons} from "../utils/common"
-import {Detail} from "./Detail";
+import {Detail} from "./Detail"
+import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
+import {installPlugin, installTheme, getTheme, getCachedUpdated, addCachedUpdated} from "../utils/addon"
 
 
-function Update({isSetting=false, renderPage = null}) {
+function Update({isSetting = false, renderPage = null}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
