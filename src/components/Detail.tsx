@@ -9,7 +9,8 @@ import {getCompatibility, getDetailURL, getPluginDatabase, getThemeDatabase, ran
 import {PluginIcon, ThemeIcon} from "../utils/icons"
 import {getTheme, getThemeColors, installPlugin, installTheme, addCachedUpdated, uninstallPlugin, uninstallTheme} from "../utils/addon"
 import {compare, getUpdatablePlugins, getUpdatableThemes} from "../utils/update"
-import {Clipboard, filterColor, Icons, ReactNative, Video} from "../utils/common"
+import {filterColor, ReactNative, Video} from "../utils/common"
+import HyperLink from "./HyperLink";
 
 function Detail({addonType}) {
     let editTextBgColor = getThemeColors("PRIMARY_DARK_500")  // -> "#..." テーマに存在しない場合はデフォルトに変更(undefined)
@@ -69,7 +70,7 @@ function Detail({addonType}) {
     })
 
     const screen_width = ReactNative.useWindowDimensions().width
-    const [description, setDescription] = React.useState(["Loading description..."])
+    const [description, setDescription] = React.useState("Loading description...")
     const [previews, setPreviews] = React.useState([])
     const addonName = get(plugin_name, `_selected_${addonType}`).toString()
 
@@ -87,8 +88,7 @@ function Detail({addonType}) {
     React.useEffect(() => {
         REST.get(randomizeURL(getDetailURL(addonType, addonName))).then(raw => {
             let data = JSON.parse(raw.text)
-            let description = data.description.replace(/(\bhttps?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*)/ig, "<l>$1<l>").split("<l>")
-            setDescription(description)
+            setDescription(data.description)
             let draftPreviews = Object.assign(
                 data.images.map((url) => {
                     return {"url": url, "width": 1, "height": 1, "type": "image"}
@@ -100,7 +100,7 @@ function Detail({addonType}) {
             setPreviews(draftPreviews)
         }).catch(response => {
             if (response.status === 404) {
-                setDescription(["No description."])
+                setDescription("No description.")
             }
         })
 
@@ -154,7 +154,9 @@ function Detail({addonType}) {
                 [1].filter(_ => Boolean(notice)).map(_ => (
                     <>
                         <Text style={[styles.sectionTitle, {color: "#e74c3c", fontFamily: Constants.Fonts.PRIMARY_SEMIBOLD}]}>Notice</Text>
-                        <Text style={[styles.sectionContent, {borderColor: "#e74c3c"}]}>{notice}</Text>
+                        <Text style={[styles.sectionContent, {borderColor: "#e74c3c"}]}>
+                            <HyperLink content={notice} addonType={addonType} addonName={addonName} />
+                        </Text>
                     </>
                 ))
             }
@@ -204,42 +206,10 @@ function Detail({addonType}) {
                 }}
                 showsHorizontalScrollIndicator={true}
             />
-            <Text style={styles.sectionTitle}>Description</Text>
 
+            <Text style={styles.sectionTitle}>Description</Text>
             <Text style={styles.sectionContent}>
-                {
-                    description.map((content) => {
-                        if (content.startsWith("http")) {
-                            return (
-                                <Text
-                                    style={styles.hyperLink}
-                                    onPress={() => {
-                                        let download_link = addonType == "plugin" ? ".js" : ".json"
-                                        if (content.endsWith(download_link)) {
-                                            if (addonType == "plugin") installPlugin(addonName, content)
-                                            else installTheme(addonName, content)
-                                        } else {
-                                            Linking.openURL(content)
-                                        }
-                                    }}
-                                    onLongPress={() => {
-                                        Clipboard.setString(content)
-                                        Toasts.open({
-                                            content: `Copied URL to clipboard`,
-                                            source: Icons.Copy
-                                        })
-                                    }}
-                                >
-                                    {content}
-                                </Text>
-                            )
-                        } else {
-                            return (
-                                <Text>{content}</Text>
-                            )
-                        }
-                    })
-                }
+                <HyperLink content={description} addonType={addonType} addonName={addonName} />
             </Text>
         </ScrollView>
     )
