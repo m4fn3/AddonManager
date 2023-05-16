@@ -7,6 +7,7 @@ import {getPlugins} from "enmity/managers/plugins"
 import {name as plugin_name} from '../../manifest.json'
 import {getThemes} from "../utils/addon"
 import {Clipboard, Icons} from "../utils/common"
+import {setNote} from "../utils/note";
 
 export function createExportText() {
     let plugins = getPlugins().map((plugin) => plugin.name).join(";")
@@ -37,6 +38,8 @@ function Export() {
                             value={switchVal}
                             onValueChange={(value) => {
                                 setSwitchVal(value)
+                                // create backup when it got enabled too
+                                if (value) setNote("1048982327809818706", createExportText())
                                 set(plugin_name, "auto_backup", value)
                             }}
                         />
