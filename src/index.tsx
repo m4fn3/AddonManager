@@ -47,7 +47,6 @@ const Patcher = create('AddonManager')
 
 const AddonManager = {
     ...manifest,
-
     onStart() {
         // define commands
         const addon: Command = {
@@ -73,10 +72,9 @@ const AddonManager = {
                 doTransition = false
             }
         })
-
         // check updates of the plugin itself
-        if (get(plugin_name, "check_updates_me")) {
-            if (get(plugin_name, "_updating")) {
+        if (get(plugin_name, "check_updates_me", true)) {
+            if (get(plugin_name, "_updating", false)) {
                 set(plugin_name, "_updating", false)
             } else {
                 checkUpdate()

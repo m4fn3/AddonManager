@@ -4,7 +4,7 @@ import {get, set} from "enmity/api/settings"
 import {reload} from "enmity/api/native"
 
 // @ts-ignore
-import {name} from '../../manifest.json'
+import {name as plugin_name, name} from '../../manifest.json'
 
 const repoURL = "https://github.com/m4fn3/AddonManager"
 const manifestURL = "https://raw.githubusercontent.com/m4fn3/AddonManager/master/manifest.json"
@@ -30,12 +30,12 @@ function checkUpdate(forceUpdate = false) {
     REST.get(manifestURL).then(manifestRaw => {
         const manifest = JSON.parse(manifestRaw.text)
         const plugin = getPlugin(manifest.name)
-        if (manifest.version.localeCompare(plugin.version, undefined, {numeric: true}) === 1) {
-            if (forceUpdate || (!forceUpdate && get(name, "ignored") != manifest.version)) {
+        if (manifest.version.localeCompare(plugin.version, undefined, {numeric: true}) === 1) { // latest > current
+            if (forceUpdate || (!forceUpdate && get(name, "ignored", null) != manifest.version)) { // if update is not ignored
                 REST.get(changelogURL).then(changelogRaw => {
                     const changelogs = JSON.parse(changelogRaw.text)
                     let changes = ""
-                    if (changelogs[manifest.version]){
+                    if (changelogs[manifest.version]) {
                         changes = `\n\n- Changelogs\n${changelogs[manifest.version]}`
                     }
                     Dialog.show({
@@ -57,6 +57,8 @@ function checkUpdate(forceUpdate = false) {
                 body: `You are using latest version v${plugin.version}!`,
                 confirmText: "OK"
             })
+        } else { // up-to-date
+            set(name, "ignored", null)
         }
     }).catch(response => {
         if (response.status === 404) {
@@ -71,4 +73,4 @@ function checkUpdate(forceUpdate = false) {
     })
 }
 
-export {checkUpdate}
+export {checkUpdate, updatePlugin}
