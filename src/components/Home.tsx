@@ -1,7 +1,7 @@
 import {View, FormSection, FormRow, Image, Text, ScrollView} from "enmity/components"
 import {Constants, NavigationStack, React, REST, StyleSheet} from "enmity/metro/common"
 import {Linking} from "enmity/metro/common"
-import {set} from "enmity/api/settings"
+import {get, set} from "enmity/api/settings"
 
 // @ts-ignore
 import {name as plugin_name, name, version} from '../../manifest.json'
@@ -15,7 +15,12 @@ import {screenOptions} from "../utils/common"
 import {Detail} from "./Detail"
 import {Icons, Invites, Navigator} from "../utils/common"
 import {compatibilityURL, randomizeURL} from "../utils/fetch"
+import {getByName} from "enmity/metro"
+import {getPlugin} from "enmity/managers/plugins"
+import {updatePlugin} from "../utils/updater"
+import {Settings} from "./Settings"
 
+const HelpMessage = getByName("HelpMessage")
 
 const Stack = NavigationStack.createStackNavigator()
 
@@ -36,7 +41,7 @@ function HomeStack() {
                 }}
             />
             {
-                [[Plugins, "Plugins"], [Themes, "Themes"], [Export, "Export"], [Import, "Import"], [Update, "Update"]].map(([Component, name]) =>
+                [[Plugins, "Plugins"], [Themes, "Themes"], [Export, "Export"], [Import, "Import"], [Update, "Update"], [Settings, "Settings"]].map(([Component, name]) =>
                     <Stack.Screen
                         name={name}
                         component={Component}
@@ -79,7 +84,11 @@ function Home({settings, renderPage}) {
         },
         title: {
             flexDirection: "column",
-
+        },
+        notice: {
+            marginTop: 30,
+            marginLeft: 20,
+            marginRight: 20
         },
         name: {
             fontSize: 30,
@@ -127,6 +136,23 @@ function Home({settings, renderPage}) {
                     <Text style={styles.author}>by mafu</Text>
                 </View>
             </View>
+            {
+                get(plugin_name, "ignored", null) ?
+                    <View style={styles.notice}>
+                        <HelpMessage messageType={0}>
+                            <Text
+                                style={styles.author}
+                                onPress={()=>{
+                                    const plugin = getPlugin(plugin_name)
+                                    updatePlugin(plugin.version, get(plugin_name, "ignored", null))
+                                }}
+                            >
+                                New version of AddonManager is available! Click here to update.
+                            </Text>
+                        </HelpMessage>
+                    </View>
+                    : <></>
+            }
             <FormSection title="STORE">
                 <FormRow
                     label="Browse plugins"
@@ -134,11 +160,6 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            // Navigation.push("EnmityCustomPage", {
-                            //     Navigation,
-                            //     pageName: `Plugins`,
-                            //     pagePanel: () => <Plugins isSetting={true}/>
-                            // })
                             renderPage(Navigation, {
                                 pageName: `Plugins`,
                                 pagePanel: () => <Plugins isSetting={true} renderPage={renderPage}/>
@@ -154,11 +175,6 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            // Navigation.push("EnmityCustomPage", {
-                            //     Navigation,
-                            //     pageName: `Themes`,
-                            //     pagePanel: () => <Themes isSetting={true}/>
-                            // })
                             renderPage(Navigation, {
                                 pageName: `Themes`,
                                 pagePanel: () => <Themes isSetting={true} renderPage={renderPage}/>
@@ -174,11 +190,6 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            // Navigation.push("EnmityCustomPage", {
-                            //     Navigation,
-                            //     pageName: `Export`,
-                            //     pagePanel: Export
-                            // })
                             renderPage(Navigation, {
                                 pageName: `Export`,
                                 pagePanel: Export
@@ -194,11 +205,6 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            // Navigation.push("EnmityCustomPage", {
-                            //     Navigation,
-                            //     pageName: `Import`,
-                            //     pagePanel: Import
-                            // })
                             renderPage(Navigation, {
                                 pageName: `Import`,
                                 pagePanel: Import
@@ -214,17 +220,27 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            // Navigation.push("EnmityCustomPage", {
-                            //     Navigation,
-                            //     pageName: `Update`,
-                            //     pagePanel: () => <Update isSetting={true}/>
-                            // })
                             renderPage(Navigation, {
                                 pageName: `Update`,
                                 pagePanel: () => <Update isSetting={true} renderPage={renderPage}/>
                             })
                         } else {
                             Navigation.navigate("Update")
+                        }
+                    }}
+                />
+                <FormRow
+                    label="Settings"
+                    leading={<FormRow.Icon source={Icons.Settings}/>}
+                    trailing={FormRow.Arrow}
+                    onPress={() => {
+                        if (settings) {
+                            renderPage(Navigation, {
+                                pageName: `Settings`,
+                                pagePanel: () => <Settings isSetting={true} renderPage={renderPage}/>
+                            })
+                        } else {
+                            Navigation.navigate("Settings")
                         }
                     }}
                 />

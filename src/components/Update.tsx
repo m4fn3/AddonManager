@@ -60,22 +60,6 @@ function Update({isSetting = false, renderPage = null}) {
                         />
                     }
                 />
-                {/*<FormRow*/}
-                {/*    label="Check updates of AddonManager itself on startup"*/}
-                {/*    leading={<FormRow.Icon source={Icons.Update}/>}*/}
-                {/*    trailing={*/}
-                {/*        <FormSwitch*/}
-                {/*            value={switchVal2}*/}
-                {/*            onValueChange={(value) => {*/}
-                {/*                setSwitchVal2(value)*/}
-                {/*                set(plugin_name, "check_updates_me", value)*/}
-                {/*            }}*/}
-                {/*        />*/}
-                {/*    }*/}
-                {/*    onPress={() => {*/}
-                {/*        checkUpdate(true)*/}
-                {/*    }}*/}
-                {/*/>*/}
             </FormSection>
             <FormSection title="PLUGINS">
                 {
@@ -90,11 +74,6 @@ function Update({isSetting = false, renderPage = null}) {
                                 onPress={() => {
                                     set(plugin_name, "_selected_plugin", name)
                                     if (isSetting) {
-                                        // Navigation.push("EnmityCustomPage", {
-                                        //     Navigation,
-                                        //     pageName: " ",
-                                        //     pagePanel: () => <Detail addonType="plugin"/>
-                                        // })
                                         renderPage(Navigation, {
                                             pageName: " ",
                                             pagePanel: () => <Detail addonType="plugin"/>

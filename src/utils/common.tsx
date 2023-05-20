@@ -26,6 +26,9 @@ const Icons = {
     Check: getIDByName('ic_check_24px'),
     Clear: getIDByName('ic_input_clear_24px'),
     Uninstall: getIDByName('ic_trash_24px'),
+    Settings: getIDByName('ic_settings_white_24px'),
+    Add: getIDByName('hub-add'),
+    SettingIcon: getIDByName('ic_rulebook') // ic_gridview
 }
 
 // styles

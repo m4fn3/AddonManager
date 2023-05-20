@@ -4,7 +4,7 @@ import {get, set} from "enmity/api/settings"
 import {reload} from "enmity/api/native"
 
 // @ts-ignore
-import {name as plugin_name, name} from '../../manifest.json'
+import {name} from '../../manifest.json'
 
 const repoURL = "https://github.com/m4fn3/AddonManager"
 const manifestURL = "https://raw.githubusercontent.com/m4fn3/AddonManager/master/manifest.json"
