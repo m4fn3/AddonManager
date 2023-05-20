@@ -10,6 +10,7 @@ import {Navigator, Icons} from "../utils/common"
 import {Detail} from "./Detail"
 import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
 import {installPlugin, installTheme, getTheme, getCachedUpdated, addCachedUpdated} from "../utils/addon"
+import {checkUpdate} from "../../../K2geLocker/src/utils/update"
 
 
 function Update({isSetting = false, renderPage = null}) {
@@ -32,6 +33,7 @@ function Update({isSetting = false, renderPage = null}) {
     let [pluginList, setPluginList] = React.useState(updatablePlugins.length ? updatablePlugins : ["@"])
     let [themeList, setThemeList] = React.useState(updatableThemes.length ? updatableThemes : ["@"])
     const [switchVal, setSwitchVal] = React.useState(Boolean(get(plugin_name, "check_updates"))) // 格納されている値は0,1になっているので真偽値に変換
+    const [switchVal2, setSwitchVal2] = React.useState(Boolean(get(plugin_name, "check_updates_me"))) // 格納されている値は0,1になっているので真偽値に変換
 
     React.useEffect(() => {
         let updated_plugins = getCachedUpdated("plugin")
@@ -59,6 +61,22 @@ function Update({isSetting = false, renderPage = null}) {
                         />
                     }
                 />
+                {/*<FormRow*/}
+                {/*    label="Check updates of AddonManager itself on startup"*/}
+                {/*    leading={<FormRow.Icon source={Icons.Update}/>}*/}
+                {/*    trailing={*/}
+                {/*        <FormSwitch*/}
+                {/*            value={switchVal2}*/}
+                {/*            onValueChange={(value) => {*/}
+                {/*                setSwitchVal2(value)*/}
+                {/*                set(plugin_name, "check_updates_me", value)*/}
+                {/*            }}*/}
+                {/*        />*/}
+                {/*    }*/}
+                {/*    onPress={() => {*/}
+                {/*        checkUpdate(true)*/}
+                {/*    }}*/}
+                {/*/>*/}
             </FormSection>
             <FormSection title="PLUGINS">
                 {

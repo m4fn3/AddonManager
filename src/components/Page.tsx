@@ -46,7 +46,6 @@ export default ({name = 'AddonManager', component = View, detail = null} = {}) =
                 cardShadowEnabled: !1,
                 cardStyle: styles.cardStyle,
                 headerStyle: styles.header,
-                headerTitleContainerStyle: styles.headerTitleContainer,
                 headerTitleAlign: 'center',
                 safeAreaInsets: {
                     top: 0,

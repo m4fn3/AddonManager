@@ -8,7 +8,7 @@ import {getPluginDatabase, getThemeDatabase} from "./fetch"
 import {getTheme, getThemes} from "./addon"
 import {Icons} from "./common"
 
-function checkUpdate() {
+function checkAddonUpdate() {
     let val = get(plugin_name, "check_updates")
     if (val === undefined) {
         set(plugin_name, "check_updates", false)
@@ -48,4 +48,4 @@ function getUpdatableThemes(themes) {
     return installedThemes.filter((name) => Object.keys(themes).includes(name) && Object.keys(themes[name]).includes("version") && getTheme(name).version && isUpdate(getTheme(name).version, themes[name].version))
 }
 
-export {checkUpdate, getUpdatablePlugins, getUpdatableThemes, compare}
+export {checkAddonUpdate, getUpdatablePlugins, getUpdatableThemes, compare}
