@@ -1,5 +1,5 @@
 import {registerPlugin} from 'enmity/managers/plugins'
-import {Navigation, React, Toasts} from 'enmity/metro/common'
+import {Navigation, React, Toasts, Scenes} from 'enmity/metro/common'
 import {create} from 'enmity/patcher'
 
 // @ts-ignore
@@ -10,21 +10,26 @@ import "./utils/native"
 import {Home, HomeStack} from "./components/Home"
 import {resetCachedUpdated} from "./utils/addon"
 import {ApplicationCommandType, Command} from "enmity/api/commands"
-import {bulk, filters} from "enmity/metro"
+import {bulk, filters, getByName} from "enmity/metro"
 import Page from "./components/Page"
 import {getByProps} from "enmity/modules"
 import {getIDByName} from "enmity/api/assets"
 import {get, set} from "enmity/api/settings"
 import {checkUpdate} from "./utils/updater"
+import {findInReactTree} from "enmity/utilities"
+import {FormArrow, FormDivider, FormRow} from "enmity/components"
+import {Icons} from "./utils/common";
 
 const [
     Messages,
     MessagesWrapper,
-    PrivateChannelActions
+    PrivateChannelActions,
+    SettingsView
 ] = bulk(
     filters.byName('MessagesConnected', false),
     filters.byName('MessagesWrapperConnected', false),
-    filters.byProps("openPrivateChannel")
+    filters.byProps("openPrivateChannel"),
+    filters.byName("UserSettingsOverviewWrapper", false)
 )
 
 const {Platform: {isPad}} = getByProps("View", "Text")
@@ -62,6 +67,36 @@ const AddonManager = {
             }
         }
         this.commands = [addon]
+
+        // patch settings
+        const unpatch = Patcher.after(SettingsView, 'default', (_, __, ret) => {
+            const Overview = findInReactTree(ret, m => m.type?.name === 'UserSettingsOverview')
+            Patcher.after(Overview.type.prototype, 'render', ({props: {navigation}}, __, res) => {
+                const Enmity = findInReactTree(res, m => m.key === "Enmity")
+                if (get(plugin_name, "add_to_settings", true)) {
+                    Enmity.props.children.push(
+                        <FormDivider/>,
+                        <FormRow
+                            label='AddonManager'
+                            leading={<FormRow.Icon source={Icons.SettingIcon}/>}
+                            trailing={<FormArrow/>}
+                            onPress={() => void navigation.push('AddonManager', {navigation})}
+                        />
+                    )
+                }
+                unpatch()
+            })
+        })
+        Patcher.after(Scenes, 'default', (_, __, res) => {
+            return {
+                ...res,
+                AddonManager: {
+                    key: 'AddonManager',
+                    title: 'AddonManager',
+                    render: () => <HomeStack/>
+                }
+            }
+        })
 
         // hacky patch for ipads to take over DM
         const Messages_ = Messages ? Messages : MessagesWrapper  // MessagesWrapper : 163+ / Messages : 162-
