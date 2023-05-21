@@ -50,9 +50,6 @@ function Settings() {
                             }}
                         />
                     }
-                    onPress={() => {
-                        checkUpdate(true)
-                    }}
                 />
             </FormSection>
         </ScrollView>

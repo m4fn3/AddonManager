@@ -4,7 +4,7 @@ import {getPlugins} from "enmity/managers/plugins"
 
 import {getThemes, installPlugin, installTheme} from "../utils/addon"
 import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
-import {fetchNote, getBackup} from "../utils/note"
+import {getBackup} from "../utils/backup"
 import {Icons} from "../utils/common"
 
 function Import() {

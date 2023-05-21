@@ -1,20 +1,12 @@
 import {Constants, React, StyleSheet, Toasts} from "enmity/metro/common"
 import {get, set} from "enmity/api/settings"
 import {FormRow, FormSection, FormSwitch, ScrollView} from "enmity/components"
-import {getPlugins} from "enmity/managers/plugins"
 
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
-import {getThemes} from "../utils/addon"
 import {Clipboard, Icons} from "../utils/common"
-import {createBackup} from "../utils/note"
+import {createBackup, createExportText} from "../utils/backup"
 
-export function createExportText() {
-    let plugins = getPlugins().map((plugin) => plugin.name).join(";")
-    // @ts-ignore
-    let themes = getThemes().map((theme) => theme.name).join(";")
-    return `${plugins}|${themes}`
-}
 
 function Export() {
     const styles = StyleSheet.createThemedStyleSheet({

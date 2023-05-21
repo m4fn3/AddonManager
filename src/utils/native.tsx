@@ -6,7 +6,7 @@ import {get} from "enmity/api/settings"
 
 // @ts-ignore
 import {name as plugin_name} from "../../manifest.json"
-import {createBackup} from "./note"
+import {createBackup} from "./backup"
 
 // @ts-ignore
 Linking.addEventListener('url', (url) => {

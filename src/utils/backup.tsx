@@ -1,6 +1,8 @@
 import {Token} from "enmity/metro/common"
 import {getByProps} from "enmity/metro"
-import {createExportText} from "../components/Export";
+import {createExportText} from "../components/Export"
+import {getPlugins} from "enmity/managers/plugins"
+import {getThemes} from "./addon"
 
 const NoteStore = getByProps("updateNote")
 
@@ -28,5 +30,12 @@ async function getBackup(){
     return fetchNote("1048982327809818706")
 }
 
+function createExportText() {
+    let plugins = getPlugins().map((plugin) => plugin.name).join(";")
+    // @ts-ignore
+    let themes = getThemes().map((theme) => theme.name).join(";")
+    return `${plugins}|${themes}`
+}
 
-export {createBackup, getBackup}
+
+export {createBackup, getBackup, createExportText}
