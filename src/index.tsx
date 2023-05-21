@@ -74,6 +74,8 @@ const AddonManager = {
         patchActionSheet(Patcher, "LongPressUrl", (args, res) => {
             if (get(plugin_name, "long_press_downloader", true)) {
                 let url = args[0].header.title
+                // avoid pushing it multiple times
+                if (args[0].options.filter(item=>item.label.includes("Download")).length) return
                 if (url.startsWith("http")) {
                     if (url.endsWith(".js")) {
                         let name = url.split("/").slice(-1)[0].replace(".js", "")
