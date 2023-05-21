@@ -73,7 +73,8 @@ const AddonManager = {
             const Overview = findInReactTree(ret, m => m.type?.name === 'UserSettingsOverview')
             Patcher.after(Overview.type.prototype, 'render', ({props: {navigation}}, __, res) => {
                 const Enmity = findInReactTree(res, m => m.key === "Enmity")
-                if (get(plugin_name, "add_to_settings", true)) {
+                const AddonManagerRow = findInReactTree(res, m => m.label === "AddonManager") // avoid pushing it multiple times
+                if (!AddonManagerRow && get(plugin_name, "add_to_settings", true)) {
                     Enmity.props.children.push(
                         <FormDivider/>,
                         <FormRow
