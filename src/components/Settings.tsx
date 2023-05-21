@@ -16,6 +16,7 @@ function Settings() {
     })
     const [switchVal, setSwitchVal] = React.useState(Boolean(get(plugin_name, "check_updates_me",true))) // 格納されている値は0,1になっているので真偽値に変換
     const [switchVal2, setSwitchVal2] = React.useState(Boolean(get(plugin_name, "add_to_settings",true))) // 格納されている値は0,1になっているので真偽値に変換
+    const [switchVal3, setSwitchVal3] = React.useState(Boolean(get(plugin_name, "long_press_downloader",true))) // 格納されている値は0,1になっているので真偽値に変換
 
 
     return (
@@ -47,6 +48,19 @@ function Settings() {
                             onValueChange={(value) => {
                                 setSwitchVal2(value)
                                 set(plugin_name, "add_to_settings", value)
+                            }}
+                        />
+                    }
+                />
+                <FormRow
+                    label="Show a download option on long press links"
+                    leading={<FormRow.Icon source={Icons.Link}/>}
+                    trailing={
+                        <FormSwitch
+                            value={switchVal3}
+                            onValueChange={(value) => {
+                                setSwitchVal3(value)
+                                set(plugin_name, "long_press_downloader", value)
                             }}
                         />
                     }

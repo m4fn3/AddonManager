@@ -8,7 +8,7 @@ import {checkPluginDatabaseVer, checkThemeDatabaseVer} from "./utils/fetch"
 import {checkAddonUpdate} from "./utils/update"
 import "./utils/native"
 import {Home, HomeStack} from "./components/Home"
-import {resetCachedUpdated} from "./utils/addon"
+import {installPlugin, installTheme, resetCachedUpdated} from "./utils/addon"
 import {ApplicationCommandType, Command} from "enmity/api/commands"
 import {bulk, filters, getByName} from "enmity/metro"
 import Page from "./components/Page"
@@ -19,6 +19,7 @@ import {checkUpdate} from "./utils/updater"
 import {findInReactTree} from "enmity/utilities"
 import {FormArrow, FormDivider, FormRow} from "enmity/components"
 import {Icons} from "./utils/common";
+import {patchActionSheet} from "../../hook";
 
 const [
     Messages,
@@ -68,6 +69,30 @@ const AddonManager = {
             }
         }
         this.commands = [addon]
+
+        // patch the long press action sheet
+        patchActionSheet(Patcher, "LongPressUrl", (args, res) => {
+            if (get(plugin_name, "long_press_downloader", true)) {
+                let url = args[0].header.title
+                if (url.endsWith(".js")) {
+                    let name = url.split("/").slice(-1)[0].replace(".js", "")
+                    args[0].options.unshift({
+                        label: "Download as a plugin",
+                        onPress: () => {
+                            installPlugin(name, url)
+                        }
+                    })
+                } else if (url.endsWith(".json")) {
+                    let name = url.split("/").slice(-1)[0].replace(".json", "")
+                    args[0].options.unshift({
+                        label: "Download as a theme",
+                        onPress: () => {
+                            installTheme(name, url)
+                        }
+                    })
+                }
+            }
+        }, true)
 
         // patch settings
         const unpatch = Patcher.after(SettingsView, 'default', (_, __, ret) => {

@@ -28,7 +28,8 @@ const Icons = {
     Uninstall: getIDByName('ic_trash_24px'),
     Settings: getIDByName('ic_settings_white_24px'),
     Add: getIDByName('hub-add'),
-    SettingIcon: getIDByName('ic_rulebook') // ic_gridview
+    SettingIcon: getIDByName('ic_rulebook'), // ic_gridview
+    Link: getIDByName('ic_link')
 }
 
 // styles
