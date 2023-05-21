@@ -2,8 +2,6 @@ import {React, Navigation, NavigationNative, NavigationStack, Constants, StyleSh
 import {Button, View} from 'enmity/components'
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
-import {installPlugin, uninstallPlugin} from "../utils/addon"
-import {getPluginDatabase} from "../utils/fetch"
 
 const Settings = NavigationStack.createStackNavigator()
 

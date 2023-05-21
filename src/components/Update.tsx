@@ -12,7 +12,7 @@ import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
 import {installPlugin, installTheme, getTheme, getCachedUpdated, addCachedUpdated} from "../utils/addon"
 
 
-function Update({isSetting = false, renderPage = null}) {
+function Update({isSetting = false}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -74,7 +74,8 @@ function Update({isSetting = false, renderPage = null}) {
                                 onPress={() => {
                                     set(plugin_name, "_selected_plugin", name)
                                     if (isSetting) {
-                                        renderPage(Navigation, {
+                                        Navigation.push("EnmityCustomPage", {
+                                            Navigation,
                                             pageName: " ",
                                             pagePanel: () => <Detail addonType="plugin"/>
                                         })
@@ -107,12 +108,8 @@ function Update({isSetting = false, renderPage = null}) {
                                 onPress={() => {
                                     set(plugin_name, "_selected_theme", name)
                                     if (isSetting) {
-                                        // Navigation.push("EnmityCustomPage", {
-                                        //     Navigation,
-                                        //     pageName: " ",
-                                        //     pagePanel: () => <Detail addonType="theme"/>
-                                        // })
-                                        renderPage(Navigation, {
+                                        Navigation.push("EnmityCustomPage", {
+                                            Navigation,
                                             pageName: " ",
                                             pagePanel: () => <Detail addonType="theme"/>
                                         })

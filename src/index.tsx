@@ -80,7 +80,14 @@ const AddonManager = {
                             label='AddonManager'
                             leading={<FormRow.Icon source={Icons.SettingIcon}/>}
                             trailing={<FormArrow/>}
-                            onPress={() => void navigation.push('AddonManager', {navigation})}
+                            onPress={() => {
+                                if (isPad) {
+                                    Navigation.pop()
+                                    burnIpad()
+                                } else {
+                                    navigation.push('AddonManager', {navigation})
+                                }
+                            }}
                         />
                     )
                 }
@@ -127,18 +134,12 @@ const AddonManager = {
     onStop() {
         Patcher.unpatchAll()
     },
-    renderPage(navigation, {pageName, pagePanel}) {
-        return navigation?.push?.("EnmityCustomPage", {
-            pageName,
-            pagePanel
-        })
-    },
     getSettingsPanel({settings}) {
         if (isPad) {
             Navigation.pop()
             burnIpad()
         }
-        return <Home settings={settings} renderPage={AddonManager.renderPage}/>
+        return <Home settings={settings}/>
     }
 }
 

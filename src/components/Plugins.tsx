@@ -9,7 +9,7 @@ import {Detail} from "./Detail"
 import {getPluginDatabase} from "../utils/fetch"
 import {installPlugin, uninstallPlugin} from "../utils/addon"
 
-function Plugins({isSetting = false, renderPage = null}) {
+function Plugins({isSetting = false}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             flex: 1,
@@ -39,12 +39,8 @@ function Plugins({isSetting = false, renderPage = null}) {
                         onPress={() => {
                             set(plugin_name, "_selected_plugin", key)
                             if (isSetting) {
-                                // Navigation.push("EnmityCustomPage", {
-                                //     Navigation,
-                                //     pageName: " ",
-                                //     pagePanel: () => <Detail addonType="plugin"/>
-                                // })
-                                renderPage(Navigation, {
+                                Navigation.push("EnmityCustomPage", {
+                                    Navigation,
                                     pageName: " ",
                                     pagePanel: () => <Detail addonType="plugin"/>
                                 })

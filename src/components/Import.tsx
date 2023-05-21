@@ -4,7 +4,7 @@ import {getPlugins} from "enmity/managers/plugins"
 
 import {getThemes, installPlugin, installTheme} from "../utils/addon"
 import {getPluginDatabase, getThemeDatabase} from "../utils/fetch"
-import {fetchNote} from "../utils/note"
+import {fetchNote, getBackup} from "../utils/note"
 import {Icons} from "../utils/common"
 
 function Import() {
@@ -69,7 +69,7 @@ function Import() {
                     leading={<FormRow.Icon source={Icons.Import}/>}
                     trailing={FormRow.Arrow}
                     onPress={() => {
-                        fetchNote("1048982327809818706").then((text) => {
+                        getBackup().then((text) => {
                             let res = checkFormat(text, "No backup was found.")
                             if (res) {
                                 processExportedText(res)

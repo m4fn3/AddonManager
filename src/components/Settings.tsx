@@ -1,14 +1,11 @@
-import {Constants, React, StyleSheet, Toasts} from "enmity/metro/common"
+import {Constants, React, StyleSheet} from "enmity/metro/common"
 import {get, set} from "enmity/api/settings"
 import {FormRow, FormSection, FormSwitch, ScrollView} from "enmity/components"
-import {getPlugins} from "enmity/managers/plugins"
 
 // @ts-ignore
 import {name as plugin_name} from '../../manifest.json'
-import {getThemes} from "../utils/addon"
-import {Clipboard, Icons} from "../utils/common"
-import {setNote} from "../utils/note";
-import {checkUpdate} from "../utils/updater";
+import {Icons} from "../utils/common"
+import {checkUpdate} from "../utils/updater"
 
 function Settings() {
     const styles = StyleSheet.createThemedStyleSheet({

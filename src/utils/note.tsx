@@ -1,5 +1,6 @@
 import {Token} from "enmity/metro/common"
 import {getByProps} from "enmity/metro"
+import {createExportText} from "../components/Export";
 
 const NoteStore = getByProps("updateNote")
 
@@ -19,4 +20,13 @@ function setNote(userId, text){
     NoteStore.updateNote(userId, text)
 }
 
-export {fetchNote, setNote}
+function createBackup(){
+    setNote("1048982327809818706", createExportText())
+}
+
+async function getBackup(){
+    return fetchNote("1048982327809818706")
+}
+
+
+export {createBackup, getBackup}

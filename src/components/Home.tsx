@@ -66,7 +66,7 @@ function HomeStack() {
     )
 }
 
-function Home({settings, renderPage}) {
+function Home({settings}) {
     const styles = StyleSheet.createThemedStyleSheet({
         container: {
             backgroundColor: Constants.ThemeColorMap.BACKGROUND_PRIMARY,
@@ -160,9 +160,10 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            renderPage(Navigation, {
+                             Navigation.push("EnmityCustomPage", {
+                                Navigation,
                                 pageName: `Plugins`,
-                                pagePanel: () => <Plugins isSetting={true} renderPage={renderPage}/>
+                                pagePanel: () => <Plugins isSetting={true}/>
                             })
                         } else {
                             Navigation.navigate("Plugins")
@@ -175,9 +176,10 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            renderPage(Navigation, {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
                                 pageName: `Themes`,
-                                pagePanel: () => <Themes isSetting={true} renderPage={renderPage}/>
+                                pagePanel: () => <Themes isSetting={true}/>
                             })
                         } else {
                             Navigation.navigate("Themes")
@@ -190,7 +192,8 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            renderPage(Navigation, {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
                                 pageName: `Export`,
                                 pagePanel: Export
                             })
@@ -205,7 +208,8 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            renderPage(Navigation, {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
                                 pageName: `Import`,
                                 pagePanel: Import
                             })
@@ -220,9 +224,10 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            renderPage(Navigation, {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
                                 pageName: `Update`,
-                                pagePanel: () => <Update isSetting={true} renderPage={renderPage}/>
+                                pagePanel: () => <Update isSetting={true}/>
                             })
                         } else {
                             Navigation.navigate("Update")
@@ -235,9 +240,10 @@ function Home({settings, renderPage}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                            renderPage(Navigation, {
+                            Navigation.push("EnmityCustomPage", {
+                                Navigation,
                                 pageName: `Settings`,
-                                pagePanel: () => <Settings isSetting={true} renderPage={renderPage}/>
+                                pagePanel: () => <Settings isSetting={true}/>
                             })
                         } else {
                             Navigation.navigate("Settings")
