@@ -1,4 +1,4 @@
-import {View, FormSection, FormRow, Image, Text, ScrollView} from "enmity/components"
+import {View, FormSection, FormRow, Image, Text, ScrollView, TouchableOpacity} from "enmity/components"
 import {Constants, NavigationStack, React, REST, StyleSheet} from "enmity/metro/common"
 import {Linking} from "enmity/metro/common"
 import {get, set} from "enmity/api/settings"
@@ -117,6 +117,7 @@ function Home({settings}) {
         }
     })
     const Navigation = Navigator.useNavigation()
+    const ignored_ver = get(plugin_name, "ignored", null)
 
     React.useEffect(() => {
         REST.get(randomizeURL(compatibilityURL)).then(raw => {
@@ -137,20 +138,18 @@ function Home({settings}) {
                 </View>
             </View>
             {
-                get(plugin_name, "ignored", null) ?
-                    <View style={styles.notice}>
+                ignored_ver ?
+                    <TouchableOpacity
+                        style={styles.notice}
+                        onPress={() => {
+                            const plugin = getPlugin(plugin_name)
+                            updatePlugin(plugin.version, ignored_ver)
+                        }}
+                    >
                         <HelpMessage messageType={0}>
-                            <Text
-                                style={styles.author}
-                                onPress={()=>{
-                                    const plugin = getPlugin(plugin_name)
-                                    updatePlugin(plugin.version, get(plugin_name, "ignored", null))
-                                }}
-                            >
-                                New version of AddonManager is available! Click here to update.
-                            </Text>
+                            {`New version of AddonManager is available. Click here to update to v${ignored_ver}!`}
                         </HelpMessage>
-                    </View>
+                    </TouchableOpacity>
                     : <></>
             }
             <FormSection title="STORE">
@@ -160,7 +159,7 @@ function Home({settings}) {
                     trailing={FormRow.Arrow}
                     onPress={() => {
                         if (settings) {
-                             Navigation.push("EnmityCustomPage", {
+                            Navigation.push("EnmityCustomPage", {
                                 Navigation,
                                 pageName: `Plugins`,
                                 pagePanel: () => <Plugins isSetting={true}/>
