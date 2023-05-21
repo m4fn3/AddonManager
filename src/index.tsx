@@ -24,12 +24,14 @@ const [
     Messages,
     MessagesWrapper,
     PrivateChannelActions,
-    SettingsView
+    SettingsView,
+    RouteUtils
 ] = bulk(
     filters.byName('MessagesConnected', false),
     filters.byName('MessagesWrapperConnected', false),
     filters.byProps("openPrivateChannel"),
-    filters.byName("UserSettingsOverviewWrapper", false)
+    filters.byName("UserSettingsOverviewWrapper", false),
+    filters.byProps("transitionTo")
 )
 
 const {Platform: {isPad}} = getByProps("View", "Text")
@@ -43,9 +45,8 @@ function burnIpad() {
         source: InfoIcon
     })
     doTransition = true
-    setTimeout(() => {
-        PrivateChannelActions.openPrivateChannel(privateChannelId)
-    }, 300)
+    RouteUtils.transitionTo("/channels/@me", undefined) // in the case DM is already opened
+    PrivateChannelActions.openPrivateChannel(privateChannelId)
 }
 
 const Patcher = create('AddonManager')
