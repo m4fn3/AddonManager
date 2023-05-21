@@ -26,13 +26,15 @@ const [
     MessagesWrapper,
     PrivateChannelActions,
     SettingsView,
-    RouteUtils
+    RouteUtils,
+    LazyActionSheet
 ] = bulk(
     filters.byName('MessagesConnected', false),
     filters.byName('MessagesWrapperConnected', false),
     filters.byProps("openPrivateChannel"),
     filters.byName("UserSettingsOverviewWrapper", false),
-    filters.byProps("transitionTo")
+    filters.byProps("transitionTo"),
+    filters.byProps("openLazy", "hideActionSheet")
 )
 
 const {Platform: {isPad}} = getByProps("View", "Text")
@@ -83,6 +85,7 @@ const AddonManager = {
                             label: "Download as a plugin",
                             onPress: () => {
                                 installPlugin(name, url)
+                                LazyActionSheet.hideActionSheet()
                             }
                         })
                     } else if (url.endsWith(".json")) {
@@ -91,6 +94,7 @@ const AddonManager = {
                             label: "Download as a theme",
                             onPress: () => {
                                 installTheme(name, url)
+                                LazyActionSheet.hideActionSheet()
                             }
                         })
                     }
