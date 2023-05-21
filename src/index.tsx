@@ -74,22 +74,24 @@ const AddonManager = {
         patchActionSheet(Patcher, "LongPressUrl", (args, res) => {
             if (get(plugin_name, "long_press_downloader", true)) {
                 let url = args[0].header.title
-                if (url.endsWith(".js")) {
-                    let name = url.split("/").slice(-1)[0].replace(".js", "")
-                    args[0].options.unshift({
-                        label: "Download as a plugin",
-                        onPress: () => {
-                            installPlugin(name, url)
-                        }
-                    })
-                } else if (url.endsWith(".json")) {
-                    let name = url.split("/").slice(-1)[0].replace(".json", "")
-                    args[0].options.unshift({
-                        label: "Download as a theme",
-                        onPress: () => {
-                            installTheme(name, url)
-                        }
-                    })
+                if (url.startsWith("http")) {
+                    if (url.endsWith(".js")) {
+                        let name = url.split("/").slice(-1)[0].replace(".js", "")
+                        args[0].options.unshift({
+                            label: "Download as a plugin",
+                            onPress: () => {
+                                installPlugin(name, url)
+                            }
+                        })
+                    } else if (url.endsWith(".json")) {
+                        let name = url.split("/").slice(-1)[0].replace(".json", "")
+                        args[0].options.unshift({
+                            label: "Download as a theme",
+                            onPress: () => {
+                                installTheme(name, url)
+                            }
+                        })
+                    }
                 }
             }
         }, true)
