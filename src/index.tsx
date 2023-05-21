@@ -45,7 +45,7 @@ function burnIpad() {
     doTransition = true
     setTimeout(() => {
         PrivateChannelActions.openPrivateChannel(privateChannelId)
-    }, 100)
+    }, 300)
 }
 
 const Patcher = create('AddonManager')
