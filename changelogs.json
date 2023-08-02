@@ -1,5 +1,6 @@
 {
   "1.1.4": "Added hacky fixes for iPad users and a updater of the plugin itself.",
   "1.1.5": "Added new option to insert AddonManager to settings",
-  "1.1.6": "Added new feature to show 'download as plugin/theme' option on long press links"
+  "1.1.6": "Added new feature to show 'download as plugin/theme' option on long press links",
+  "1.1.7": "Fixed a crash on 190+"
 }
