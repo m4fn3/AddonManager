@@ -1,10 +1,10 @@
 import {Constants, React, StyleSheet} from "enmity/metro/common"
+import {FormRow} from "enmity/components"
 import {getIDByName} from "enmity/api/assets"
 import {getByName, getByProps} from "enmity/metro"
 import {getByKeyword} from "enmity/modules"
 
 // modules
-const Icon = getByName("Icon")
 const Navigator = getByKeyword("getFocusedRoute")
 const Search = getByName('StaticSearchBarContainer')
 const Invites = getByProps('acceptInviteAndTransitionToInviteChannel')
@@ -54,7 +54,7 @@ const screenOptions = {
     headerTitleContainerStyle: stackStyles.headerText,
     headerTitleStyle: stackStyles.headerText,
     headerBackTitleStyle: stackStyles.headerText,
-    headerBackImage: () => <Icon source={getIDByName("ios-back")}/>,
+    headerBackImage: () => <FormRow.Icon source={getIDByName("ios-back")}/>,
     headerTitleAlign: 'center',
     safeAreaInsets: {
         top: 0,
